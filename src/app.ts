@@ -14,9 +14,9 @@ const io = new Server(server, {
 });
 
 // Store user locations in memory
-const userLocations: Record<string, { latitude: number; longitude: number }> ={};
+const userLocations: Record<string, { latitude: number; longitude: number }> = {};
 
-const port = process.env.PORT  ;
+const port = process.env.PORT;
 
 
 app.use(express.json());
@@ -27,39 +27,41 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/user-list.html');
 
 })
-app.get("/get",(req,res)=>{
+app.get("/get", (req, res) => {
   console.log(req.query)
 
   res.status(200).json({});
 })
 
 // ✅ Route to update location
-app.post("/update-data", (req: Request, res:Response | any) => {
-  let { username, latitude, longitude  } = req.body;
-  console.log(`update ${username} lon:${longitude} lat:$${latitude}`)
+app.post("/update-data", (req: Request, res: Response | any) => {
+  const lat = req.query.lat as string;
+  const longitude = req.query.longitude as string;
+  const time = req.query.time;
+  const s = req.query.s;
+  const batt = req.query.batt;
+
+  console.log(` lon:${longitude} lat:$${lat} , battary:${batt}`)
   // #FIXME remove this 
-  // latitude+= Math.random();
-  // longitude+= Math.random();
 
-  if (!username || !latitude || !longitude) {
-    return res.status(400).json({ error: "Missing username, latitude, or longitude" });
-  }
+  time
 
+  s
   // Store the new location
-  if (!userLocations[username]) {
-    // userLocations[username] = {};
+  if (!userLocations["samsuang"]) {
+    // userLocations["samsuang"] = {};
   }
 
-  const newLocation = { latitude: parseFloat(latitude), longitude: parseFloat(longitude) };
-  userLocations[username]=(newLocation);
+  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude) ,batt,time,s};
+  userLocations["samsuang"] = (newLocation);
 
   // Emit real-time update
-  io.to(username).emit("locationUpdate", newLocation);
+  io.to("samsuang").emit("locationUpdate", newLocation);
 
   res.status(200).json({ message: "Location updated successfully", location: newLocation });
 });
 
-app.get('/usernames',(req,res)=>{
+app.get('/usernames', (req, res) => {
   console.log("GET /usernames")
 
   res.status(200).json(Object.keys(userLocations))
