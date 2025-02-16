@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Map with Socket.io</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous">
+    </script>
+
+
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Live Location Tracking</h2>
+    <div id="map"></div>
+
+    <script>
+        // const api = "https://tracking-gps-server.amjad.cloud"
+        const api = "http://localhost:3015"
+         const INITIAL_REGION = {
+    latitude: 34.8021,   // Approximate center of Syria
+    longitude: 39.6065,  // Approximate center of Syria
+    latitudeDelta: 6,    // Adjust for zoom level
+    longitudeDelta: 6    // Adjust for zoom level
+  };
+
+        const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const marker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude]).addTo(map);
+
+        const socket = io(api);
+        socket.emit("subscribeToUser", "S");
+
+        // Listen for location updates from the socket
+        socket.on("locationUpdate", (data) => {
+            console.log(data)
+            marker.setLatLng([data.latitude, data.longitude]);
+            map.setView([data.latitude, data.longitude]);
+        });
+        // setInterval(() => {
+        //     console.log(12)
+        //     marker.setLatLng([1 + Math.random(), 2 + Math.random()]);
+        //     // map.setView([1+ Math.random(), 2+ Math.random()],882);
+
+        // }, 1000)
+    </script>
+</body>
+
+</html>

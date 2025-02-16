@@ -23,7 +23,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }))
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/user-list.html');
 
+})
+app.get("/get",(req,res)=>{
+  console.log(req.body)
+  console.log(req.params)
+  res.status(200).json({});
+})
 
 // ✅ Route to update location
 app.post("/update-data", (req: Request, res:Response | any) => {
