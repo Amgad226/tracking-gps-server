@@ -28,7 +28,7 @@ app.use(cors({ origin: "*" }))
 // ✅ Route to update location
 app.post("/update-data", (req: Request, res:Response | any) => {
   let { username, latitude, longitude  } = req.body;
-  console.log(`update ${username} location`)
+  console.log(`update ${username} lon:${longitude} lat:$${latitude}`)
   // #FIXME remove this 
   // latitude+= Math.random();
   // longitude+= Math.random();
