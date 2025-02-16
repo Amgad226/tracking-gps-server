@@ -15,7 +15,7 @@ const io = new Server(server, {
 
 // Store user locations in memory
 const userLocations: Record<string, { latitude: number; longitude: number }> = {};
-
+let numberOfAllRecivedEvents= 0;
 const port = process.env.PORT;
 
 
@@ -52,7 +52,8 @@ app.get("/update-data", (req: Request, res: Response | any) => {
     // userLocations["samsuang"] = {};
   }
 
-  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude) ,batt,time,s};
+  numberOfAllRecivedEvents++
+  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude) ,batt,time,s,numberOfAllRecivedEvents};
   userLocations["samsuang"] = (newLocation);
 
   // Emit real-time update

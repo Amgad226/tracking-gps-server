@@ -29,6 +29,8 @@
     <h3>battary: <span id="battary">_</span></h3>
     <h3>speed: <span id="speed">_</span></h3>
     <h3>time : <span id="time">_</span></h3>
+    <h3>number of events in server <span id="numberOfAllRecivedEvents">0</span></h3>
+    
     <script>
         let count = 0;
         const api = "https://tracking-gps-server.amjad.cloud"
@@ -58,7 +60,9 @@
                 latitude,
                 longitude,
                 s,
-                time
+                time,
+                numberOfAllRecivedEvents
+
             } = data
             console.log(data)
             document.getElementById("events").innerHTML = ++count
@@ -67,6 +71,8 @@
              document.getElementById("battary").innerHTML=batt
              document.getElementById("speed").innerHTML=s
              document.getElementById("time").innerHTML=time
+             document.getElementById("numberOfAllRecivedEvents").innerHTML=numberOfAllRecivedEvents
+             
 
 
             marker.setLatLng([data.latitude, data.longitude]);
