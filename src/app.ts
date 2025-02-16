@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import { createServer } from 'http';
 import { Server } from "socket.io";
 import 'dotenv/config'
-
+import path from "path"
 const app = express();
 const server = createServer(app); // Create HTTP server
 const io = new Server(server, {
@@ -24,9 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }))
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, '..', 'static', 'index.html'));
+});
 
-})
 app.get("/get", (req, res) => {
   console.log(req.query)
 
