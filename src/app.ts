@@ -27,11 +27,11 @@ app.use(cors({ origin: "*" }))
 
 // ✅ Route to update location
 app.post("/update-data", (req: Request, res:Response | any) => {
-  console.log("update")
   let { username, latitude, longitude  } = req.body;
+  console.log(`update ${username} location`)
   // #FIXME remove this 
-  latitude+= Math.random();
-  longitude+= Math.random();
+  // latitude+= Math.random();
+  // longitude+= Math.random();
 
   if (!username || !latitude || !longitude) {
     return res.status(400).json({ error: "Missing username, latitude, or longitude" });
@@ -52,7 +52,7 @@ app.post("/update-data", (req: Request, res:Response | any) => {
 });
 
 app.get('/usernames',(req,res)=>{
-  console.log("usernames")
+  console.log("GET /usernames")
 
   res.status(200).json(Object.keys(userLocations))
 })
