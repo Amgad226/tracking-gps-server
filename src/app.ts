@@ -34,7 +34,7 @@ app.get("/get", (req, res) => {
 })
 
 // ✅ Route to update location
-app.post("/update-data", (req: Request, res: Response | any) => {
+app.get("/update-data", (req: Request, res: Response | any) => {
   const lat = req.query.lat as string;
   const longitude = req.query.longitude as string;
   const time = req.query.time;
