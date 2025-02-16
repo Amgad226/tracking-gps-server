@@ -3,6 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { createServer } from 'http';
 import { Server } from "socket.io";
+import 'dotenv/config'
 
 const app = express();
 const server = createServer(app); // Create HTTP server
@@ -15,7 +16,7 @@ const io = new Server(server, {
 // Store user locations in memory
 const userLocations: Record<string, { latitude: number; longitude: number }> ={};
 
-const port = process.env.PORT  ?? 3000;
+const port = process.env.PORT  ;
 
 
 app.use(express.json());
