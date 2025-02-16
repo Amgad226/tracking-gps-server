@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }))
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/user-list.html');
+  res.sendFile(__dirname + '/index.html');
 
 })
 app.get("/get", (req, res) => {

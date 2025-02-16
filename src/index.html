@@ -42,13 +42,13 @@
         const marker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude]).addTo(map);
 
         const socket = io(api);
-        socket.emit("subscribeToUser", "S");
+        socket.emit("subscribeToUser", "samsunag");
 
         // Listen for location updates from the socket
         socket.on("locationUpdate", (data) => {
             console.log(data)
             marker.setLatLng([data.latitude, data.longitude]);
-            map.setView([data.latitude, data.longitude]);
+            // map.setView([data.latitude, data.longitude]);
         });
         // setInterval(() => {
         //     console.log(12)
