@@ -28,8 +28,8 @@ app.get('/', (req, res) => {
 
 })
 app.get("/get",(req,res)=>{
-  console.log(req.body)
-  console.log(req.params)
+  console.log(req.query)
+
   res.status(200).json({});
 })
 
