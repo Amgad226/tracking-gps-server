@@ -23,16 +23,22 @@
 <body>
     <h2>Live Location Tracking</h2>
     <div id="map"></div>
-
+    <h3>number of events: <span id="events">0</span></h3>
+    <h3>latitude: <span id="lat">_</span></h3>
+    <h3>longitude: <span id="long">_</span></h3>
+    <h3>battary: <span id="battary">_</span></h3>
+    <h3>speed: <span id="speed">_</span></h3>
+    <h3>time : <span id="time">_</span></h3>
     <script>
+        let count = 0;
         const api = "https://tracking-gps-server.amjad.cloud"
         // const api = "http://localhost:3015"
-         const INITIAL_REGION = {
-    latitude: 34.8021,   // Approximate center of Syria
-    longitude: 39.6065,  // Approximate center of Syria
-    latitudeDelta: 6,    // Adjust for zoom level
-    longitudeDelta: 6    // Adjust for zoom level
-  };
+        const INITIAL_REGION = {
+            latitude: 34.8021, // Approximate center of Syria
+            longitude: 39.6065, // Approximate center of Syria
+            latitudeDelta: 6, // Adjust for zoom level
+            longitudeDelta: 6 // Adjust for zoom level
+        };
 
         const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -42,11 +48,27 @@
         const marker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude]).addTo(map);
 
         const socket = io(api);
-        socket.emit("subscribeToUser", "samsunag");
+        socket.emit("subscribeToUser", "samsuang");
 
         // Listen for location updates from the socket
         socket.on("locationUpdate", (data) => {
+            
+            let {
+                batt,
+                latitude,
+                longitude,
+                s,
+                time
+            } = data
             console.log(data)
+            document.getElementById("events").innerHTML = ++count
+             document.getElementById("lat").innerHTML=latitude
+             document.getElementById("long").innerHTML=longitude
+             document.getElementById("battary").innerHTML=batt
+             document.getElementById("speed").innerHTML=s
+             document.getElementById("time").innerHTML=time
+
+
             marker.setLatLng([data.latitude, data.longitude]);
             // map.setView([data.latitude, data.longitude]);
         });
