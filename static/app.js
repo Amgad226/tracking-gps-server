@@ -34,7 +34,10 @@ const homeMarker= L.marker([33.4748025, 36.3272913], { icon: homeIcon }).addTo(m
 // Create phone icon
 const phoneIcon = createIcon('static/phone.png');
 const phoneMarker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude], { icon: phoneIcon }).addTo(map);
-
+const myhomeMarker = L.marker([33.4675913,36.3304661],{icon:homeIcon}).addTo(map)
+myhomeMarker.on("click", () => {
+    map.setView(myhomeMarker.getLatLng(), 14); // Zoom level 14, adjust as needed
+});
 homeMarker.on("click", () => {
     map.setView(homeMarker.getLatLng(), 14); // Zoom level 14, adjust as needed
 });
