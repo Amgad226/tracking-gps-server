@@ -38,6 +38,20 @@ app.get("/get", (req, res) => {
 
 app.use("/static", express.static(path.join(__dirname, '..', 'static')));
 
+app.post("/update", async (req: Request, res: Response | any) => {
+  const lat = req.body.lat as string;
+  const longitude = req.body.longitude as string;
+  const time = req.body.time;
+  const s = req.body.s;
+  const batt = req.body.batt;
+
+  console.log(`POST /update : lon:${longitude} lat:$${lat} , battary:${batt}`)
+  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude), batt, time, s };
+
+  const user = "samsuang";
+  res.status(200).json(newLocation)
+
+});
 
 // ✅ Route to update location
 app.get("/update-data", async (req: Request, res: Response | any) => {
