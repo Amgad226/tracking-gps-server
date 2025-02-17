@@ -36,6 +36,9 @@ app.get("/get", (req, res) => {
   res.status(200).json({});
 })
 
+app.use("/static", express.static(path.join(__dirname, '..', 'static')));
+
+
 // ✅ Route to update location
 app.get("/update-data", async (req: Request, res: Response | any) => {
   const lat = req.query.lat as string;
