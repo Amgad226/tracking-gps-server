@@ -44,8 +44,9 @@ app.post("/update", async (req: Request, res: Response | any) => {
   const time = req.body.time;
   const s = req.body.s;
   const batt = req.body.batt;
+  const count = req.body.count;
 
-  console.log(`POST /update : lon:${longitude} lat:$${lat} , battary:${batt}`)
+  console.log(`POST| lon:${longitude}  , lat:${lat} , count:${count}`,"")
   const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude), batt, time, s };
 
   const user = "samsuang";
