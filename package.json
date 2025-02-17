@@ -17,10 +17,12 @@
     "@types/node": "^22.13.4",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
+    "prisma": "^6.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@prisma/client": "^6.3.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

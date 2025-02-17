@@ -5,6 +5,9 @@ import { createServer } from 'http';
 import { Server } from "socket.io";
 import 'dotenv/config'
 import path from "path"
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient()
+
 const app = express();
 const server = createServer(app); // Create HTTP server
 const io = new Server(server, {
@@ -15,7 +18,7 @@ const io = new Server(server, {
 
 // Store user locations in memory
 const userLocations: Record<string, { latitude: number; longitude: number }> = {};
-let numberOfAllRecivedEvents= 0;
+let numberOfAllRecivedEvents = 0;
 const port = process.env.PORT;
 
 
@@ -34,7 +37,7 @@ app.get("/get", (req, res) => {
 })
 
 // ✅ Route to update location
-app.get("/update-data", (req: Request, res: Response | any) => {
+app.get("/update-data", async (req: Request, res: Response | any) => {
   const lat = req.query.lat as string;
   const longitude = req.query.longitude as string;
   const time = req.query.time;
@@ -42,24 +45,41 @@ app.get("/update-data", (req: Request, res: Response | any) => {
   const batt = req.query.batt;
 
   console.log(` lon:${longitude} lat:$${lat} , battary:${batt}`)
-  // #FIXME remove this 
 
-  time
+  const user = "samsuang";
 
-  s
-  // Store the new location
-  if (!userLocations["samsuang"]) {
-    // userLocations["samsuang"] = {};
-  }
+
 
   numberOfAllRecivedEvents++
-  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude) ,batt,time,s,numberOfAllRecivedEvents};
-  userLocations["samsuang"] = (newLocation);
+  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude), batt, time, s, numberOfAllRecivedEvents };
+  const date = new Date(newLocation.time as string); // Convert to Date object
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are 0-based
+  const year = date.getFullYear();
+
+  let hour = date.getHours();
+  await prisma.event.create({
+    data: {
+      battary: newLocation.batt as string,
+      lat: newLocation.latitude?.toString(),
+      long: newLocation.longitude?.toString(),
+      speed: newLocation.s as string,
+      time: newLocation.time as string,
+      user: user,
+
+      day,
+      hour,
+      month,
+      year,
+    }
+  })
+
+  userLocations[user] = (newLocation);
 
   // Emit real-time update
-  io.to("samsuang").emit("locationUpdate", newLocation);
+  io.to(user).emit("locationUpdate", newLocation);
 
-  res.status(200).json({ message: "Location updated successfully", location: newLocation });
+  await res.status(200).json({ message: "Location updated successfully", location: newLocation });
 });
 
 app.get('/usernames', (req, res) => {
