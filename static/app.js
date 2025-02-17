@@ -29,12 +29,18 @@ L.control.layers(baseMaps).addTo(map);
 const homeIcon = createIcon('static/home.png');
 
 // Add a marker for the home location
-L.marker([33.4748025, 36.3272913], { icon: homeIcon }).addTo(map);
+const homeMarker= L.marker([33.4748025, 36.3272913], { icon: homeIcon }).addTo(map);
 
 // Create phone icon
 const phoneIcon = createIcon('static/phone.png');
 const phoneMarker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude], { icon: phoneIcon }).addTo(map);
 
+homeMarker.on("click", () => {
+    map.setView(homeMarker.getLatLng(), 14); // Zoom level 14, adjust as needed
+});
+phoneMarker.on("click", () => {
+    map.setView(phoneMarker.getLatLng(), 14); // Zoom level 14, adjust as needed
+});
 // Connect to socket
 const socket = io(api);
 
