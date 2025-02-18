@@ -51,6 +51,7 @@ const socket = io(api);
 socket.emit("subscribeToUser", "samsuang");
 
 socket.on("locationUpdate", (data) => {
+    console.log(data)
     updateLoader();
     updateUI(data);
     phoneMarker.setLatLng([data.latitude, data.longitude]);
