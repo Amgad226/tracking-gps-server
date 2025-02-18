@@ -16,6 +16,7 @@ const io = new Server(server, {
   },
 });
 
+let count = 0;
 // Store user locations in memory
 const userLocations: Record<string, { latitude: number; longitude: number }> = {};
 let numberOfAllRecivedEvents = 0;
@@ -39,18 +40,10 @@ app.get("/get", (req, res) => {
 app.use("/static", express.static(path.join(__dirname, '..', 'static')));
 
 app.post("/update", async (req: Request, res: Response | any) => {
-  const lat = req.body.lat as string;
-  const longitude = req.body.longitude as string;
-  const time = req.body.time;
-  const s = req.body.s;
-  const batt = req.body.batt;
-  const count = req.body.count;
 
-  console.log(`POST| lon:${longitude}  , lat:${lat} , count:${count}`,"")
-  const newLocation = { latitude: parseFloat(lat), longitude: parseFloat(longitude), batt, time, s };
-
-  const user = "samsuang";
-  res.status(200).json(newLocation)
+  console.log(`POST update/${count++} `, req.body);
+  console.log("")
+  res.status(200).json()
 
 });
 
