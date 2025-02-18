@@ -8,11 +8,13 @@ import { increaseNumberOfAllRecivedEvents, numberOfAllRecivedEvents } from '../u
 
 export const updateLocation = async (req: Request, res: Response): Promise<any> => {
     const { latitude, longitude, speed, battary, timestamp, username }: EventDto = req.body;
+
     const validateData = validateUpdateData({ latitude, longitude, speed, battary, timestamp, username })
 
     if (!validateData) {
         return res.status(400).json({ message: 'Invalid data provided' });
     }
+    console.log({ latitude, longitude, speed, battary, timestamp, username })
 
     increaseNumberOfAllRecivedEvents()
     const newLocation: EventToEmit = { latitude: parseFloat(latitude), longitude: parseFloat(longitude), batt: battary, time: timestamp, s: speed, numberOfAllRecivedEvents };
