@@ -121,8 +121,8 @@ function updateUI(data) {
     document.getElementById("events").innerText = count++;
     document.getElementById("lat").innerText = latitude;
     document.getElementById("long").innerText = longitude;
-    document.getElementById("battary").innerText = batt;
-    document.getElementById("speed").innerText = s;
+    document.getElementById("battary").innerText = Math.round(batt * 100);
+    document.getElementById("speed").innerText = Math.round(s* 3.6);
     document.getElementById("time").innerText = formatTime(time);
     document.getElementById("numberOfAllRecivedEvents").innerText = numberOfAllRecivedEvents;
 }
