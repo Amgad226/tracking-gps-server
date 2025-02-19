@@ -54,7 +54,7 @@ socket.on("locationUpdate", (data) => {
     console.log(data)
     updateLoader();
     updateUI(data);
-    phoneMarker.setLatLng([data.latitude, data.longitude]);
+    phoneMarker.setLatLng([data.lat, data.long]);
 });
 
 
