@@ -20,6 +20,8 @@ export const setupSocket = (server: any) => {
 
       // Send latest location if available
       const latestLocation = userLocations[username];
+      console.log(userLocations)
+      console.log(latestLocation)
       if (latestLocation) {
         socket.emit("locationUpdate", latestLocation);
       }

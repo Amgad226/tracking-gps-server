@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import cors from "cors";
 import bodyParser from "body-parser";
 import { createServer } from 'http';
@@ -7,6 +7,7 @@ import path from "path"
 import router from './routes/location.route';
 import { UserLocation } from './interfaces/users-locations.interface';
 import { setupSocket } from './gateway/socket.gateway';
+import { handleErrors } from '../middlewares/handle-error.middleware';
 
 
 
@@ -23,12 +24,20 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }))
 
-router.use("/static", express.static(path.join(__dirname, '..', 'static')));
 
-app.use('/', router);
+app.use("/static", express.static(path.join(__dirname, '..', 'static')));
+router.get("/test", async (req, res) => {
+  // Simulating an error
+  throw new Error("Something went wrong!");
+});
 
+app.use(router.use());
 
+app.use(handleErrors);
 
+app.use("*", (req, res) => {
+  res.status(400).json({ message: "not found" })
+})
 
 
 server.listen(port, () => {

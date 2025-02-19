@@ -3,19 +3,20 @@ import { LocationRepo } from '../repositories/location.repository';
 import { io, usersLocations } from '../app';
 import { EventDto, EventToEmit } from '../interfaces/event.interface';
 import { increaseNumberOfAllRecivedEvents, numberOfAllRecivedEvents } from '../utils/counter';
+import { BadRequestExecption } from '../../execptions/bad-request.execption';
 
 
 
-export const updateLocation = async (req: Request, res: Response): Promise<any> => {
-    const { latitude, longitude, speed, battary, timestamp, username }: EventDto = req.body;
+export const updateLocation = async (data: EventDto): Promise<EventToEmit> => {
+    const { latitude, longitude, speed, battary, timestamp, username } = data;
 
     const validateData = validateUpdateData({ latitude, longitude, speed, battary, timestamp, username })
 
     if (!validateData) {
-        return res.status(400).json({ message: 'Invalid data provided' });
+        throw new BadRequestExecption({ message: "invalid data provided" })
     }
-    console.log({ latitude, longitude, speed, battary, timestamp, username })
-
+    console.log(`${numberOfAllRecivedEvents} : latitude:${latitude} ,longitude:${longitude} , battery:${battary},time:${timestamp},username:${username} `)
+    console.log()
     increaseNumberOfAllRecivedEvents()
     const newLocation: EventToEmit = { latitude: parseFloat(latitude), longitude: parseFloat(longitude), batt: battary, time: timestamp, s: speed, numberOfAllRecivedEvents };
     const repo = new LocationRepo()
@@ -28,13 +29,12 @@ export const updateLocation = async (req: Request, res: Response): Promise<any> 
     io.to("samsuang").emit("locationUpdate", newLocation);
 
 
-
-    res.status(200).json(newLocation)
+    return newLocation
 }
 
 
 
-const validateUpdateData = (data: EventDto): boolean|EventDto => {
+const validateUpdateData = (data: EventDto): boolean | EventDto => {
     // Check if all required fields are provided and valid
     if (!data.latitude || !data.longitude || !data.username) {
         return false; // Invalid data, return false
@@ -45,7 +45,7 @@ const validateUpdateData = (data: EventDto): boolean|EventDto => {
         return false; // Invalid latitude or longitude
     }
 
-    if(data.speed){
+    if (data.speed) {
         if (isNaN(parseFloat(data.speed))) {
             return false; // Invalid speed
         }
