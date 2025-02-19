@@ -1,35 +1,32 @@
-import { Request, Response } from 'express';
 import { LocationRepo } from '../repositories/location.repository';
-import { io, usersLocations } from '../app';
-import { EventDto, EventToEmit } from '../interfaces/event.interface';
+import { io } from '../app';
+import { EventDto } from '../interfaces/event.interface';
 import { increaseNumberOfAllRecivedEvents, numberOfAllRecivedEvents } from '../utils/counter';
 import { BadRequestExecption } from '../../execptions/bad-request.execption';
 
 
 
-export const updateLocation = async (data: EventDto): Promise<EventToEmit> => {
-    const { latitude, longitude, speed, battary, timestamp, username } = data;
+export const updateLocation = async (data: EventDto): Promise<void> => {
 
-    const validateData = validateUpdateData({ latitude, longitude, speed, battary, timestamp, username })
+    const validateData = validateUpdateData(data)
 
     if (!validateData) {
         throw new BadRequestExecption({ message: "invalid data provided" })
     }
-    console.log(`${numberOfAllRecivedEvents} : latitude:${latitude} ,longitude:${longitude} , battery:${battary},time:${timestamp},username:${username} `)
-    console.log()
-    increaseNumberOfAllRecivedEvents()
-    const newLocation: EventToEmit = { latitude: parseFloat(latitude), longitude: parseFloat(longitude), batt: battary, time: timestamp, s: speed, numberOfAllRecivedEvents };
-    const repo = new LocationRepo()
-    repo.store({ ...newLocation, username: username })
 
-    // STEP Update location in user map 
-    usersLocations[username] = (newLocation);
+    
+    console.log(`${numberOfAllRecivedEvents} : latitude:${data.latitude} ,longitude:${data.longitude} , battery:${data.battary},time:${data.timestamp},username:${data.username} `)
+    console.log()
+
+    increaseNumberOfAllRecivedEvents()
+
+    const repo = new LocationRepo();
+    const storedEvnet=await repo.store(data)
+
 
     //STEP emit to socket new changes
-    io.to("samsuang").emit("locationUpdate", newLocation);
+    io.to("samsuang").emit("locationUpdate", {...storedEvnet,numberOfAllRecivedEvents});
 
-
-    return newLocation
 }
 
 

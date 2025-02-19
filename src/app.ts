@@ -18,7 +18,6 @@ export const io = setupSocket(server);
 
 const port = process.env.PORT;
 
-export const usersLocations: UserLocation = {}
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));

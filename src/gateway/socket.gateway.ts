@@ -1,10 +1,15 @@
 
 import { Server } from 'socket.io';
+import { LocationRepo } from '../repositories/location.repository';
+import { EventDb, EventToEmit } from '../interfaces/event.interface';
+import { numberOfAllRecivedEvents } from '../utils/counter';
 
-export const userLocations: Record<string, { latitude: number; longitude: number }> = {};
+interface ServerToClientEvents {
+  locationUpdate: (a:EventToEmit) => void;
+}
 
 export const setupSocket = (server: any) => {
-  const io = new Server(server, {
+  const io = new Server<any,ServerToClientEvents>(server, {
     cors: {
       origin: "*",
     },
@@ -14,16 +19,16 @@ export const setupSocket = (server: any) => {
     console.log("New client connected");
 
     // Listen for username subscription
-    socket.on("subscribeToUser", (username: string) => {
+    socket.on("subscribeToUser", async (username: string) => {
       socket.join(username);
       console.log(`Client subscribed to ${username}`);
 
       // Send latest location if available
-      const latestLocation = userLocations[username];
-      console.log(userLocations)
-      console.log(latestLocation)
-      if (latestLocation) {
-        socket.emit("locationUpdate", latestLocation);
+      const repo = new LocationRepo()
+      const event = await repo.findLatestByName("samsuang");
+
+      if (event) {
+        socket.emit("locationUpdate", {...event,numberOfAllRecivedEvents});
       }
     });
 

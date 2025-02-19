@@ -27,14 +27,14 @@ baseMaps["Google Maps"].addTo(map);
 
 L.control.layers(baseMaps).addTo(map);
 // Create home icon
-const homeIcon = createIcon('static/home.png');
+const homeIcon = createIcon('static/home.png',20);
 
 // Add a marker for the home location
 const homeMarker= L.marker([33.4748025, 36.3272913], { icon: homeIcon }).addTo(map);
 
 // Create phone icon
 const phoneIcon = createIcon('static/phone.png');
-const phoneMarker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude], { icon: phoneIcon }).addTo(map);
+const phoneMarker = L.marker([0,0], { icon: phoneIcon }).addTo(map);
 const myhomeMarker = L.marker([33.4675913,36.3304661],{icon:homeIcon}).addTo(map)
 myhomeMarker.on("click", () => {
     map.setView(myhomeMarker.getLatLng(), 14); // Zoom level 14, adjust as needed
@@ -97,10 +97,10 @@ window.addEventListener("offline", () => {
     showConnectionStatus("No internet connection", "internet");
 });
 // Function to create an icon
-function createIcon(url) {
+function createIcon(url,size=25) {
     return L.icon({
         iconUrl: url,
-        iconSize: [25, 25],
+        iconSize: [size, size],
         iconAnchor: [12, 12],
         popupAnchor: [0, -12]
     });
@@ -116,13 +116,13 @@ function updateLoader() {
 
 // Function to update the UI with new data
 function updateUI(data) {
-    const { batt, latitude, longitude, s, time, numberOfAllRecivedEvents } = data;
+    const { battary, lat, long, speed, time, numberOfAllRecivedEvents } = data;
 
     document.getElementById("events").innerText = count++;
-    document.getElementById("lat").innerText = latitude;
-    document.getElementById("long").innerText = longitude;
-    document.getElementById("battary").innerText = Math.round(batt * 100);
-    document.getElementById("speed").innerText = s < 0 ? 0 :Math.round(s) *3.6;
+    document.getElementById("lat").innerText = lat;
+    document.getElementById("long").innerText = long;
+    document.getElementById("battary").innerText =battary;
+    document.getElementById("speed").innerText = speed < 0 ? 0 :Math.round(speed) *3.6;
     document.getElementById("time").innerText = formatTime(time);
     document.getElementById("numberOfAllRecivedEvents").innerText = numberOfAllRecivedEvents;
 }
