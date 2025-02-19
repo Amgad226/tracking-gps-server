@@ -26,7 +26,7 @@ export const setupSocket = (server: any) => {
       // Send latest location if available
       const repo = new LocationRepo()
       const event = await repo.findLatestByName("samsuang");
-
+      console.log(`user joined and access this init data `,event)
       if (event) {
         socket.emit("locationUpdate", {...event,numberOfAllRecivedEvents});
       }
