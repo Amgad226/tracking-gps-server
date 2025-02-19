@@ -17,7 +17,7 @@ export interface EventDb {
   speed: string;
   long: string;
   lat: string;
-  time: Date;
+  time: string;
   year: number;
   month: number;
   day: number;
