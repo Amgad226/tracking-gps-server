@@ -24,8 +24,8 @@ export class LocationRepo {
         return await PrismaService.instance.event.create({
             data: {
                 battary: data.GPSLogger ? data.battary.toString()  : (Math.round(data.battary * 100)).toString() ,
-                lat: data.latitude,
-                long: data.longitude,
+                lat: data.latitude.toString(),
+                long: data.longitude.toString(),
                 speed: data.speed ,
                 time: data.timestamp,
                 user: data.username,
