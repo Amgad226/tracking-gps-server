@@ -7,7 +7,7 @@ export class LocationRepo {
     }
     async findLatestByName(name: string): Promise<Pick<EventDb, "user" | "battary" | "speed" | "long" | "lat" | "time"> | null> {
         return await PrismaService.instance.event.findFirst({
-            orderBy: { id: 'desc' }, where: { user: name },
+            orderBy: { createdAt: 'desc' }, where: { user: name },
             select: { lat: true, long: true, speed: true, battary: true, time: true, user: true }
 
         })

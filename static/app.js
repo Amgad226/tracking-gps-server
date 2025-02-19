@@ -4,13 +4,13 @@ const api = "https://tracking-gps-server.amjad.cloud";
 let count = 0;
 
 const INITIAL_REGION = {
-    latitude: 34.8021,
-    longitude: 39.6065,
+    latitude: 33.4747953,
+    longitude: 36.3273011,
     latitudeDelta: 6,
     longitudeDelta: 6
 };
 
-const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 6);
+const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 8);
 
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: 'Map data &copy; OpenStreetMap contributors'
@@ -30,11 +30,11 @@ L.control.layers(baseMaps).addTo(map);
 const homeIcon = createIcon('static/home.png',20);
 
 // Add a marker for the home location
-const homeMarker= L.marker([33.4748025, 36.3272913], { icon: homeIcon }).addTo(map);
+const homeMarker= L.marker([33.4748025, 36.3272913], { icon: homeIcon,forceZIndex: 1  ,
+}).addTo(map);
 
 // Create phone icon
-const phoneIcon = createIcon('static/phone.png');
-const phoneMarker = L.marker([0,0], { icon: phoneIcon }).addTo(map);
+const phoneMarker = L.marker([0,0], { forceZIndex: 1  }).addTo(map);
 const myhomeMarker = L.marker([33.4675913,36.3304661],{icon:homeIcon}).addTo(map)
 myhomeMarker.on("click", () => {
     map.setView(myhomeMarker.getLatLng(), 14); // Zoom level 14, adjust as needed
@@ -130,6 +130,7 @@ function updateUI(data) {
 // Function to format the time
 function formatTime(time) {
     const date = new Date(time);
+    console.log(date)
     const day = date.getDate();
     const month = date.getMonth() + 1; // Months are 0-based
     const year = date.getFullYear();
