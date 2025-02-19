@@ -4,7 +4,7 @@ export interface EventDto {
   speed: number,
   battary: number,
   GPSLogger: string
-  timestamp: string,
+  timestamp: number,
 
   username: string
 }
