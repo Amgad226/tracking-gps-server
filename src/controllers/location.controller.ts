@@ -38,12 +38,12 @@ const validateUpdateData = (data: EventDto): boolean | EventDto => {
     }
 
     // Additional validation for numerical fields can be added here
-    if (isNaN(parseFloat(data.latitude)) || isNaN(parseFloat(data.longitude))) {
+    if (isNaN(parseFloat(data.latitude as unknown as string)) || isNaN(parseFloat(data.longitude as unknown as string))) {
         return false; // Invalid latitude or longitude
     }
 
     if (data.speed) {
-        if (isNaN(parseFloat(data.speed))) {
+        if (isNaN(parseFloat(data.speed as unknown as string))) {
             return false; // Invalid speed
         }
     }
