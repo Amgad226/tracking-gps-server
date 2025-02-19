@@ -28,7 +28,7 @@ export class LocationRepo {
                 long: data.longitude.toString(),
                 speed: (data.speed < 0) ? "0" :(Math.round(data.speed) *3.6).toString() ,
                 time: data.timestamp.toString(),
-                user: data.username,
+                user: "samsung",
 
                 day,
                 hour,
