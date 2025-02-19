@@ -26,7 +26,7 @@ export class LocationRepo {
                 battary: data.GPSLogger ? data.battary.toString()  : (Math.round(data.battary * 100)).toString() ,
                 lat: data.latitude.toString(),
                 long: data.longitude.toString(),
-                speed: data.speed ,
+                speed: (data.speed < 0) ? "0" :(Math.round(data.speed) *3.6).toString() ,
                 time: data.timestamp,
                 user: data.username,
 

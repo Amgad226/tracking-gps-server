@@ -122,7 +122,7 @@ function updateUI(data) {
     document.getElementById("lat").innerText = lat;
     document.getElementById("long").innerText = long;
     document.getElementById("battary").innerText =battary;
-    document.getElementById("speed").innerText = speed < 0 ? 0 :Math.round(speed) *3.6;
+    document.getElementById("speed").innerText = speed;
     document.getElementById("time").innerText = formatTime(time);
     document.getElementById("numberOfAllRecivedEvents").innerText = numberOfAllRecivedEvents;
 }

@@ -1,7 +1,7 @@
 export interface EventDto {
-  latitude: string,
-  longitude: string,
-  speed: string,
+  latitude: number,
+  longitude: number,
+  speed: number,
   battary: number,
   GPSLogger: string
   timestamp: string,
