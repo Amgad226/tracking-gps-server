@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
-import { BaseError } from "../src/errors/base-error";
-import { errorHandler } from "../src/errors/error-handler";
+import { BaseError } from "../errors/base-error";
+import { errorHandler } from "../errors/error-handler";
 
 export const handleErrors = async (err: BaseError, req: Request | any, res: Response | any, next: NextFunction) => {
     if (!errorHandler.isTrustedError(err)) {

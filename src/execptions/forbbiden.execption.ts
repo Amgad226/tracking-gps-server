@@ -1,4 +1,4 @@
-import { BaseError } from "../src/errors/base-error";
+import { BaseError } from "../errors/base-error";
 
 export class ForbiddenExecption extends BaseError {
     constructor(data: { message: string }) {

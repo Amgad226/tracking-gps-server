@@ -1,8 +1,8 @@
 import { LocationRepo } from '../repositories/location.repository';
-import { io } from '../app';
+import { io } from '../../app';
 import { EventDto } from '../interfaces/event.interface';
 import { increaseNumberOfAllRecivedEvents, numberOfAllRecivedEvents } from '../utils/counter';
-import { BadRequestExecption } from '../../execptions/bad-request.execption';
+import { BadRequestExecption } from '../execptions/bad-request.execption';
 
 
 

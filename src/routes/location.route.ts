@@ -14,9 +14,10 @@ router.get("/update", async (req, res) => {
     await updateLocation(req.query as unknown as EventDto)
     res.status(200).json()
 })
-
+// 
 
 router.get('/', (req, res) => {
+    console.log(__dirname)
     res.sendFile(path.join(__dirname, '..', '..', 'static', 'index.html'));
 });
 
