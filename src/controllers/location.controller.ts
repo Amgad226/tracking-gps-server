@@ -15,7 +15,7 @@ export const updateLocation = async (data: EventDto): Promise<void> => {
     }
 
     
-    console.log(`${numberOfAllRecivedEvents} : latitude:${data.latitude} ,longitude:${data.longitude} , battery:${data.battary},time:${data.timestamp},username:${data.username} `)
+    console.log(`${(data.GPSLogger ?"by GPSLogger:":"" )}${numberOfAllRecivedEvents} : latitude:${data.latitude} ,longitude:${data.longitude} , battery:${data.battary},time:${data.timestamp},username:${data.username} `)
     console.log()
 
     increaseNumberOfAllRecivedEvents()
