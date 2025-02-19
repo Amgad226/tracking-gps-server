@@ -20,7 +20,7 @@ model Event {
   speed     String 
   long String  
   lat String
-  time DateTime
+  time String
   year Int
   month Int
   day Int 
