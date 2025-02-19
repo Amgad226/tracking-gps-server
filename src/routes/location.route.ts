@@ -18,7 +18,7 @@ router.get("/update", async (req, res) => {
 
 router.get('/', (req, res) => {
     console.log(__dirname)
-    res.sendFile(path.join(__dirname, '..', '..', 'static', 'index.html'));
+    res.sendFile(path.join(__dirname, '..','..', '..', 'static', 'index.html'));
 });
 
 
