@@ -4,97 +4,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Map with Socket.io</title>
+    <title>Tracking </title>
+    <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <style>
-        #map {
-            height: 500px;
-            width: 100%;
-        }
-    </style>
-</head>
-<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-<style>
-    #map {
-    height: 90vh;
-    width: 90%;
-    margin: 20px auto;
-    border-radius: 10px;
-    border: 2px solid #ddd;
-}
-a{
+
  
-  
-}
+</head>
 
-.a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    padding: 10px 10px;
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none;
-    color: white;
-    background-color: black;
-    border-radius: 8px;
-    border: 3px solid black;
-    transition: all 0.3s ease-in-out;
-}
-
-.a:hover {
-    background-color: white;
-    color: black;
-    border-color: black;
-}
-
-</style>
 <body>
-    <div id="time" style="position: fixed; z-index: 1111;background-color: red;left: 50%;">time</div>
-     <a class="a" href="https://tracking-gps-server.amjad.cloud">عرض الصفحة الرئيسية </a> 
+
+    <h2>Location Tracking</h2>
     <div id="map"></div>
-    <script>
-        //  "33.47496259", long: "36.32728593",
-        const INITIAL_REGION = {
-            latitude: 33.47496259, // Approximate center of Syria
-            longitude: 36.32728593, // Approximate center of Syria
-            latitudeDelta: 4, // Adjust for zoom level
-            longitudeDelta: 1 // Adjust for zoom level
-        };
-
-        const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 14);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; OpenStreetMap contributors'
-        }).addTo(map);
-
-        const marker = L.marker([INITIAL_REGION.latitude, INITIAL_REGION.longitude]).addTo(map);
-
-        const data = fetch("https://tracking-gps-server.amjad.cloud/data").then(data => {
-            data.json().then(data => {
-                const arr = data.ddata
-                console.log(arr)
-                // const markerCluster = L.markerClusterGroup();
-                // data.ddata.forEach((point) => {
-                //     markerCluster.addLayer(L.marker([point.lat, point.long]));
-                // });
-                // map.addLayer(markerCluster);
-               const t=  document.getElementById("time")
-                data.ddata.forEach((point, index) => {
-                    setTimeout(() => {
-                        console.log(index)
-                        t.innerHTML=point.time
-                        marker.setLatLng([point.lat, point.long]);
-
-                    }, index*100)
+    <div class="loader"></div>
 
 
-                })
-            })
-        })
-    </script>
+    <div class="stats-container">
+        <div class="stats-card">
+            <div class="stats-header">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 13h2v-2H3v2m4 6h2v-8H7v8m4-2h2v-6h-2v6m4-10v14h2V7h-2m4 4v10h2V11h-2Z" />
+                </svg>
+                Live Statistics
+            </div>
+            <div class="items">
+
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18" />
+                        <path d="M7 16v-4" />
+                        <path d="M11 16V9" />
+                        <path d="M15 16V5" />
+                        <path d="M19 16v-2" />
+                    </svg>
+                    Events in this session: <span id="events" class="stats-value">0</span>
+                </div>
+
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18" />
+                        <path d="M7 16v-4" />
+                        <path d="M11 16V9" />
+                        <path d="M15 16V5" />
+                        <path d="M19 16v-2" />
+                    </svg>
+                    Events in Server: <span id="numberOfAllRecivedEvents" class="stats-value">0</span>
+                </div>
+
+
+
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="10" r="3" />
+                        <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z" />
+                    </svg>
+                    Latitude: <span id="lat" class="stats-value">_</span>
+                </div>
+
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="10" r="3" />
+                        <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z" />
+                    </svg>
+                    Longitude: <span id="long" class="stats-value">_</span>
+                </div>
+
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="6" width="18" height="14" rx="2" ry="2" />
+                        <line x1="8" y1="6" x2="8" y2="2" />
+                        <line x1="16" y1="6" x2="16" y2="2" />
+                        <path d="M3 10h18" />
+                    </svg>
+                    Battery: <span id="battary" class="stats-value">_</span>
+                </div>
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 13h2l2-5 2 10 2-6 2 3h3" />
+                        <path d="M20 10v4h-4" />
+                    </svg>
+                    Speed: <span id="speed" class="stats-value">_</span>
+                </div>
+
+                <div class="stats-item">
+                    <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Time: <span id="time" class="stats-value">_</span>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./static/tracking.js"></script>
 </body>
 
 </html>

@@ -26,7 +26,7 @@ export class LocationRepo {
     }
     async data(): Promise<ReturnedEvnet[]> {
         return await PrismaService.instance.event.findMany({
-            where: { id:{gt:6950} },
+            // where: { id:{gt:6950} },
             select: { lat: true, long: true, speed: true, battary: true, time: true, user: true }
 
         })
