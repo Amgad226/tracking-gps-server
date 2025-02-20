@@ -31,13 +31,9 @@ router.get("/data", async (req, res) => {
 // 
 
 
+
 router.get('/', (req, res) => {
-    console.log(__dirname)
     res.sendFile(path.join(__dirname, '..', '..', 'static', 'index.html'));
-});
-router.get('/tracking', (req, res) => {
-    console.log(__dirname)
-    res.sendFile(path.join(__dirname, '..','..', 'static', 'tracking.html'));
 });
 
 
