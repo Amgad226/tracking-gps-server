@@ -17,17 +17,14 @@ router.get("/update", async (req, res) => {
 
 //  
 router.get("/latest", async (req, res) => {
-    // latitude=1&longitude=1&timestamp=1&speed=1&battary=1&username
     const event = await latestEvent()
     res.status(200).json(event)
 })
 router.get("/count", async (req, res) => {
-    // latitude=1&longitude=1&timestamp=1&speed=1&battary=1&username
     const eventsCount = await countEvents()
     res.status(200).json({count:eventsCount})
 })
 router.get("/data", async (req, res) => {
-    // latitude=1&longitude=1&timestamp=1&speed=1&battary=1&username
     const ddata = await data()
     res.status(200).json({count : ddata.length,"ddata":ddata})
 })
@@ -36,11 +33,11 @@ router.get("/data", async (req, res) => {
 
 router.get('/', (req, res) => {
     console.log(__dirname)
-    res.sendFile(path.join(__dirname, '..','..', '..', 'static', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', '..', 'static', 'index.html'));
 });
 router.get('/tracking', (req, res) => {
     console.log(__dirname)
-    res.sendFile(path.join(__dirname, '..','..', '..', 'static', 'tracking.html'));
+    res.sendFile(path.join(__dirname, '..','..', 'static', 'tracking.html'));
 });
 
 
