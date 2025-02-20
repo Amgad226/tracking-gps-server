@@ -1,4 +1,4 @@
-import { LocationRepo } from '../repositories/location.repository';
+import { LocationRepo, ReturnedEvnet } from '../repositories/location.repository';
 import { io } from '../../app';
 import { EventDto } from '../interfaces/event.interface';
 import { increaseNumberOfAllRecivedEvents, numberOfAllRecivedEvents } from '../utils/counter';
@@ -14,20 +14,44 @@ export const updateLocation = async (data: EventDto): Promise<void> => {
         throw new BadRequestExecption({ message: "invalid data provided" })
     }
 
-    
-    console.log(`${(data.GPSLogger ?"by GPSLogger:":"" )}${numberOfAllRecivedEvents} : latitude:${data.latitude} ,longitude:${data.longitude} , battery:${data.battary},time:${data.timestamp},username:${data.username} `)
+
+    console.log(`${(data.GPSLogger ? "by GPSLogger:" : "")}${numberOfAllRecivedEvents} : latitude:${data.latitude} ,longitude:${data.longitude} , battery:${data.battary},time:${data.timestamp},username:${data.username} `)
     console.log()
 
     increaseNumberOfAllRecivedEvents()
 
     const repo = new LocationRepo();
-    const storedEvnet=await repo.store(data)
+    const storedEvnet = await repo.store(data)
 
 
     //STEP emit to socket new changes
-    io.to("samsuang").emit("locationUpdate", {...storedEvnet,numberOfAllRecivedEvents});
+    io.to("samsuang").emit("locationUpdate", { ...storedEvnet, numberOfAllRecivedEvents });
 
 }
+
+
+export const latestEvent = async (): Promise<ReturnedEvnet | null> => {
+
+
+    const repo = new LocationRepo();
+    
+    return await repo.latest() 
+   
+}
+export const countEvents = async (): Promise<any> => {
+
+
+    const repo = new LocationRepo();
+    
+    return await repo.count() 
+   
+}
+export const data =  async ():Promise<ReturnedEvnet[]>=>{
+    const repo = new LocationRepo();
+
+    return await repo.data()
+}
+
 
 
 

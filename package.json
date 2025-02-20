@@ -2,10 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "index": "dist/app.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon app.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,6 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.4",
     "express": "^4.21.2",
-    "nodemon": "^3.1.9",
     "prisma": "^6.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
@@ -24,7 +24,9 @@
     "@prisma/client": "^6.3.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
+    "nodemon": "^3.1.9",
     "pm2": "^5.4.3",
     "socket.io": "^4.8.1"
   }

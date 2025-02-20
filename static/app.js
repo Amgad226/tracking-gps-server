@@ -30,7 +30,7 @@ L.control.layers(baseMaps).addTo(map);
 const homeIcon = createIcon('static/home.png',20);
 
 // Add a marker for the home location
-const homeMarker= L.marker([33.4748025, 36.3272913], { icon: homeIcon,forceZIndex: 1  ,
+const homeMarker= L.marker([33.46641189 , 36.33309355 ], { icon: homeIcon,forceZIndex: 1  ,
 }).addTo(map);
 
 // Create phone icon
