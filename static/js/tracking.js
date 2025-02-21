@@ -19,7 +19,7 @@
                 let firstPoint = [data.ddata[index].lat, data.ddata[index].long]
                 let secondPoint = [data.ddata[index + 1]?.lat, data.ddata[index + 1]?.long]
                 const line = L.polyline([firstPoint, secondPoint], {
-                    color: 'rgba(252, 95, 95, 0.3)'
+                    color: 'rgba(0, 0, 0, 0.6)'
                 }).addTo(map);
 
 
@@ -27,16 +27,16 @@
                 setTimeout(() => {
                     // map.fitBounds(line.getBounds());
                     const line = L.polyline([firstPoint, secondPoint], {
-                        color: 'rgba(252, 95, 95, 0.7)',
+                        color: 'rgba(250, 124, 124, 0.7)',
                         smoothFactor: 1
                     }).addTo(map);
-                    map.setView([parseFloat(point.lat).toFixed(3), parseFloat(point.long).toFixed(3)]); // Zoom level 14, adjust as needed
+                    map.setView([parseFloat(point.lat).toFixed(3), parseFloat(point.long).toFixed(3)],17);
 
                     updateLoader();
                     updateUI(point);
                     phoneMarker.setLatLng([point.lat, point.long]);
 
-                }, index * 300)
+                }, index * 350)
 
 
             })
