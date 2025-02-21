@@ -6,7 +6,7 @@ const INITIAL_REGION = {
     longitudeDelta: 6
 };
 
-const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 8);
+const map = L.map('map').setView([INITIAL_REGION.latitude, INITIAL_REGION.longitude], 18);
 
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: 'Map data &copy; OpenStreetMap contributors'
