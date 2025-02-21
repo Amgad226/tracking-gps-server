@@ -4,31 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../images/logo.png">
-    <title>Live Map with Socket.io</title>
+    <title>Tracking </title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/leaflet.css" />
 
-  
- 
 </head>
 
 <body>
 
-    <h2>Live Location Tracking</h2>
+    <!-- <h2>Location Tracking</h2> -->
     <div id="map"></div>
-    <div class="loader"></div>
-
 
     <div class="stats-container">
+
         <div class="stats-card">
             <div class="stats-header">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 13h2v-2H3v2m4 6h2v-8H7v8m4-2h2v-6h-2v6m4-10v14h2V7h-2m4 4v10h2V11h-2Z" />
-                </svg>
-                Live Statistics
+                <div class="loader"></div>
+
+                <div class="title">Live Statistics</div>
+                <div class="button" id="close"   onclick="closee()">close</div >
+                <div class="button" id="open" style="display: none;" onclick="openn()">open</div >
+    
             </div>
-            <div class="items">
+        
+            <div class="items"  style="display: block;" id="items">
 
                 <div class="stats-item">
                     <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -103,9 +102,12 @@
                 </div>
 
 
+
+
             </div>
 
         </div>
+
     </div>
     <script src="../js/leaflet.js"></script>
     <script src="../js/socket-io.js"></script>

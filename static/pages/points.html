@@ -12,19 +12,22 @@
 
 <body>
 
-    <h2>Location Tracking</h2>
+    <!-- <h2>Location Tracking</h2> -->
     <div id="map"></div>
-    <div class="loader"></div>
 
     <div class="stats-container">
+
         <div class="stats-card">
             <div class="stats-header">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 13h2v-2H3v2m4 6h2v-8H7v8m4-2h2v-6h-2v6m4-10v14h2V7h-2m4 4v10h2V11h-2Z" />
-                </svg>
-                Live Statistics
+                <div class="loader"></div>
+
+                <div class="title">Live Statistics</div>
+                <div class="button" id="close"  style="display: none;" onclick="closee()">close</div >
+                <div class="button" id="open" onclick="openn()">open</div >
+    
             </div>
-            <div class="items">
+        
+            <div class="items"  style="display: none;" id="items">
 
                 <div class="stats-item">
                     <svg class="stats-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -99,9 +102,12 @@
                 </div>
 
 
+
+
             </div>
 
         </div>
+
     </div>
     <script src="../js/leaflet.js"></script>
 

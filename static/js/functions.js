@@ -45,3 +45,18 @@ function formatTime(time) {
     return `${day}-${month}-${year} - ${hours}:${minutes} ${amPm}`;
 }
 
+
+
+function closee(){
+    document.getElementById("items").style.display="none"
+    document.getElementById("close").style.display="none"
+    document.getElementById("open").style.display="block"
+
+}
+function openn(){
+    document.getElementById("items").style.display="block"
+    document.getElementById("close").style.display="block"
+    document.getElementById("open").style.display="none"
+
+
+}
