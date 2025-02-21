@@ -7,6 +7,8 @@ socket.on("locationUpdate", (data) => {
     console.log(data)
     updateLoader();
     updateUI(data);
+    updateMapView(data);
+
     phoneMarker.setLatLng([data.lat, data.long]);
 });
 
