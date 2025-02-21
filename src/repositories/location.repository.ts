@@ -24,11 +24,15 @@ export class LocationRepo {
 
         })
     }
-    async data(): Promise<ReturnedEvnet[]> {
+    async data(start:string,end:string): Promise<ReturnedEvnet[]> {
         return await PrismaService.instance.event.findMany({
-            // where: { id:{gt:6950} },
+            where: { 
+                createdAt: {
+                    gte: new Date(start), 
+                    lte: new Date(end),
+                }
+            },
             select: { lat: true, long: true, speed: true, battary: true, time: true, user: true }
-
         })
     }
 

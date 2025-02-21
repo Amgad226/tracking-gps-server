@@ -1,5 +1,18 @@
+const urlParams = new URLSearchParams(window.location.search);
 
-    fetch(`${api}/data`).then(data => {
+const start = urlParams.get('start');
+const end = urlParams.get('end');
+console.log(urlParams)
+console.log(start,end)
+if(!start || !end){
+    alert("start and end dates is required")
+}
+else{
+    getDate(start,end,200)
+}
+    
+function getDate(start,end,trackingSpeed){
+    fetch(`${api}/data?start=${start}&end=${end}`).then(data => {
         let currentDate;
         data.json().then(data => {
             
@@ -36,10 +49,12 @@
                     updateUI(point);
                     phoneMarker.setLatLng([point.lat, point.long]);
 
-                }, index * 350)
+                }, index * trackingSpeed)
 
 
             })
         })
     })
 
+
+}

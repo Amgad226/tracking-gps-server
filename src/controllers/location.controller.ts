@@ -46,10 +46,10 @@ export const countEvents = async (): Promise<any> => {
     return await repo.count() 
    
 }
-export const data =  async ():Promise<ReturnedEvnet[]>=>{
+export const data =  async (start:string,end:string):Promise<ReturnedEvnet[]>=>{
     const repo = new LocationRepo();
 
-    return await repo.data()
+    return await repo.data(start,end)
 }
 
 

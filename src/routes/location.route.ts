@@ -2,6 +2,7 @@ import { countEvents, data, latestEvent, updateLocation } from '../controllers/l
 import path from 'path';
 import { EventDto } from '../interfaces/event.interface';
 import { CustomRouter } from './base-router';
+import { BadRequestExecption } from '../execptions/bad-request.execption';
 
 const router = new CustomRouter();
 // 
@@ -13,7 +14,7 @@ router.get("/update", async (req, res) => {
     // latitude=1&longitude=1&timestamp=1&speed=1&battary=1&username
     await updateLocation(req.query as unknown as EventDto)
     res.status(200).json()
-}) 
+})
 
 //  
 router.get("/latest", async (req, res) => {
@@ -22,11 +23,16 @@ router.get("/latest", async (req, res) => {
 })
 router.get("/count", async (req, res) => {
     const eventsCount = await countEvents()
-    res.status(200).json({count:eventsCount})
+    res.status(200).json({ count: eventsCount })
 })
 router.get("/data", async (req, res) => {
-    const ddata = await data()
-    res.status(200).json({count : ddata.length,"ddata":ddata})
+    const start = req.query.start as string
+    const end = req.query.end as string
+    if (!start || !end) {
+        throw new BadRequestExecption({ message: "dates are requires" })
+    }
+    const ddata = await data(start, end)
+    res.status(200).json({ count: ddata.length, "ddata": ddata })
 })
 // 
 
