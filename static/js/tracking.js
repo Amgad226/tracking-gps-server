@@ -92,6 +92,4 @@ function drawPolyline(point1, point2,color) {
     }).addTo(map);
 }
 
-function updateMapView(nextPoint) {
-    map.setView([parseFloat(nextPoint.lat).toFixed(3), parseFloat(nextPoint.long).toFixed(3)], 14);
-}
+

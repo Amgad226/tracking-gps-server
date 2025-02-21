@@ -52,3 +52,7 @@ function createIcon(url,size=25) {
         popupAnchor: [0, -12]
     });
 }
+
+function updateMapView(nextPoint) {
+    map.setView([parseFloat(nextPoint.lat).toFixed(3), parseFloat(nextPoint.long).toFixed(3)], 14);
+}
