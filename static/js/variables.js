@@ -11,3 +11,4 @@ const battaryElement =document.getElementById("battary");
 const speedElement =document.getElementById("speed") ;
 const timeElement =document.getElementById("time") ;
 const numberOfAllRecivedEventsElement =document.getElementById("numberOfAllRecivedEvents");
+const loaderElement =document.getElementById("loaderr");

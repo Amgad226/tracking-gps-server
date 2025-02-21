@@ -17,7 +17,7 @@ const baseMaps = {
     "Esri": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
 };
 
-baseMaps["Satellite"].addTo(map);
+baseMaps["Google Maps"].addTo(map);
 
 L.control.layers(baseMaps).addTo(map);
 // Create home icon

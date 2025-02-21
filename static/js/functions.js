@@ -1,11 +1,11 @@
 
 
 // Function to update the loader background
-function updateLoader() {
+function updateLoader(time=500) {
     loader.style.background = "#00ff00";
     setTimeout(() => {
         loader.style.background = "#5e5d5d";
-    }, 500);
+    }, time);
 }
 
 // Function to update the UI with new data
