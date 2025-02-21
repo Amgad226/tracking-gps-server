@@ -25,24 +25,25 @@ function updateUI(data) {
     battaryElement.innerText = battary;
     speedElement.innerText = speed;
     timeElement.innerText = formatTime(time);
-    numberOfAllRecivedEventsElement.innerText = numberOfAllRecivedEvents;
+    numberOfAllRecivedEventsElement.innerText = numberOfAllRecivedEvents ?? "-";
 }
 
 // Function to format the time
 function formatTime(time) {
     const date = new Date(time);
-    console.log(date)
+    // console.log(date)
     const day = date.getDate();
     const month = date.getMonth() + 1; // Months are 0-based
     const year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
+    let sec = date.getSeconds();
     const amPm = hours >= 12 ? "PM" : "AM";
 
     hours = hours % 12 || 12; // Convert 24-hour to 12-hour format
     minutes = minutes < 10 ? `0${minutes}` : minutes;
 
-    return `${day}-${month}-${year} - ${hours}:${minutes} ${amPm}`;
+    return `${day}-${month}-${year} - ${hours}:${minutes}:${sec} ${amPm}`;
 }
 
 
