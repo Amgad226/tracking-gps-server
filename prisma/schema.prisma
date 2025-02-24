@@ -29,3 +29,20 @@ model Event {
   @@map("events")
 }
 
+
+model EventV2 {
+  id        Int      @id @default(autoincrement())
+  user      String
+  battary   Float
+  speed     Float
+  long      Float
+  lat       Float
+  time      DateTime
+  year      Int
+  month     Int
+  day       Int
+  hour      Int
+  createdAt DateTime @default(now())
+
+  @@map("events_v2")
+}

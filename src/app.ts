@@ -35,5 +35,6 @@ app.use("*", (req, res) => {
 
 
 server.listen(port, () => {
+  console.log(`Database url ${process.env.DATABASE_URL}`)
   console.log(`Server is running on port ${port}`);
 });

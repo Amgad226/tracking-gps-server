@@ -74,3 +74,4 @@ const validateUpdateData = (data: EventDto): boolean | EventDto => {
 
     return data; // All validations passed
 };
+// http://localhost:3015/update?latitude=1.2&longitude=1.2&timestamp=484984321684&speed=11&battary=55&username=s&GPSLogger=1
