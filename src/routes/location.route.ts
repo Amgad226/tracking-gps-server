@@ -28,10 +28,14 @@ router.get("/count", async (req, res) => {
 router.get("/data", async (req, res) => {
     const start = req.query.start as string
     const end = req.query.end as string
-    if (!start || !end) {
-        throw new BadRequestExecption({ message: "dates are requires" })
+    const timezone = req.query.timezone as string;
+    const allowedTimezones  = ["Asia/Damascus","Asia/Dubai"] 
+    console.log(timezone, start, end)
+    if (!start || !end || !timezone || timezone == "undefined" || allowedTimezones.includes(timezone)) {
+        throw new BadRequestExecption({ message: "dates and timezone are requires" })
     }
-    const ddata = await data(start, end)
+
+    const ddata = await data(start, end, timezone)
     res.status(200).json({ count: ddata.length, "ddata": ddata })
 })
 // 

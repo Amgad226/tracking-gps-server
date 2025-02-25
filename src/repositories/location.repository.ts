@@ -1,5 +1,6 @@
 import { EventToEmit, EventDto, EventDb } from '../interfaces/event.interface';
 import { PrismaService } from '../services/prisma.service';
+import moment from "moment-timezone";
 
 export interface ReturnedEvnet extends Pick<EventDb, "user" | "battary" | "speed" | "long" | "lat" | "time"> { }
 export class LocationRepo {
@@ -15,7 +16,7 @@ export class LocationRepo {
     async latest(): Promise<ReturnedEvnet | null> {
         return await PrismaService.instance.event.findFirst({
             orderBy: { createdAt: 'desc' },
-            select: { lat: true, long: true, speed: true, battary: true, time: true, user: true }
+            select: { id:true,lat: true, long: true, speed: true, battary: true, time: true, user: true }
 
         })
     }
@@ -24,12 +25,17 @@ export class LocationRepo {
 
         })
     }
-    async data(start:string,end:string): Promise<ReturnedEvnet[]> {
+    async data(start:string,end:string,timezone:string): Promise<ReturnedEvnet[]> {
+        const startUtc = moment.tz(start,timezone).utc().toDate()
+        const endUtc = moment.tz(end,timezone).utc().toDate()
+        console.log(timezone,startUtc,endUtc);
+
+
         return await PrismaService.instance.event.findMany({
             where: { 
                 createdAt: {
-                    gte: new Date(start), 
-                    lte: new Date(end),
+                    gte: startUtc, 
+                    lte: endUtc,
                 }
             },
             select: { lat: true, long: true, speed: true, battary: true, time: true, user: true }

@@ -2,21 +2,34 @@ const urlParams = new URLSearchParams(window.location.search);
 const start = urlParams.get('start');
 const end = urlParams.get('end');
 const speedQ = urlParams.get('speed');
+const timezone = urlParams.get('timezone');
 const speed = 1000 / speedQ;
-
 console.log(urlParams);
 console.log(start, end);
 
-// Check for missing parameters early to avoid unnecessary execution
-if (!start || !end) {
-    alert("Start and end dates are required");
-} else {
-    fetchAndDisplayData(start, end);
+if (!start) {
+    alert(`start is required`)
 }
 
-async function fetchAndDisplayData(start, end) {
+if (!end) {
+    alert(`end is required`)
+}
+
+if (!timezone) {
+    alert(`timezone is required`)
+}
+
+if (timezone == "undefined") {
+    alert(`timezone is required`)
+}
+
+
+fetchAndDisplayData(start, end, timezone);
+
+
+async function fetchAndDisplayData(start, end, timezone) {
     try {
-        const points = await getAndValidatePoints(start, end);
+        const points = await getAndValidatePoints(start, end, timezone);
         if (points.length === 0) return;
 
         points.forEach((point, index) => {
@@ -28,7 +41,7 @@ async function fetchAndDisplayData(start, end) {
                 updateMapView(nextPoint);
                 updateUI(nextPoint);
                 phoneMarker.setLatLng([nextPoint.lat, nextPoint.long]);
-                updateLoader(index*speed);
+                updateLoader(index * speed);
             }, index * speed);
         });
     } catch (error) {
@@ -37,9 +50,9 @@ async function fetchAndDisplayData(start, end) {
     }
 }
 
-async function getAndValidatePoints(start, end) {
+async function getAndValidatePoints(start, end, timezone) {
     try {
-        const response = await fetch(`${api}/data?start=${start}&end=${end}`);
+        const response = await fetch(`${api}/data?start=${start}&end=${end}&timezone=${timezone}`);
         const data = await response.json();
 
         loaderElement.style.display = "none";
@@ -72,7 +85,7 @@ async function getAndValidatePoints(start, end) {
 
             currentDate = data.ddata[index + 1].time;
 
-            drawPolyline(data.ddata[index], data.ddata[index+1],'rgba(0, 0, 0,0.5)');
+            drawPolyline(data.ddata[index], data.ddata[index + 1], 'rgba(0, 0, 0,0.5)');
             validatedPoints.push(data.ddata[index]);
 
         }
@@ -91,5 +104,3 @@ function drawPolyline(point1, point2,color) {
         smoothFactor: 1
     }).addTo(map);
 }
-
-
