@@ -13,24 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 model Event {
-  id        Int      @id @default(autoincrement())
-  user      String
-  battary   String
-  speed     String 
-  long String  
-  lat String
-  time String
-  year Int
-  month Int
-  day Int 
-  hour Int
-  createdAt DateTime @default(now())
-  @@map("events")
-}
-
-
-model EventV2 {
   id        Int      @id @default(autoincrement())
   user      String
   battary   Float
@@ -44,5 +29,5 @@ model EventV2 {
   hour      Int
   createdAt DateTime @default(now())
 
-  @@map("events_v2")
+  @@map("events")
 }

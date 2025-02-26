@@ -71,6 +71,6 @@ const validateUpdateData = (data: EventDto): boolean | EventDto => {
             return false; // Invalid speed
         }
     }
-
+    
     return data; // All validations passed
 };

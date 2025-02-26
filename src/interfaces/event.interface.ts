@@ -1,10 +1,10 @@
 export interface EventDto {
-  latitude: number,
-  longitude: number,
-  speed: number,
-  battary: number,
+  latitude: string,
+  longitude: string,
+  speed: string,
+  battary: string,
   GPSLogger: string
-  timestamp: number,
+  timestamp: string,
 
   username: string
 }
@@ -13,11 +13,11 @@ export interface EventDto {
 export interface EventDb {
   id: number;
   user: string;
-  battary: string;
-  speed: string;
-  long: string;
-  lat: string;
-  time: string;
+  battary: number;
+  speed: number;
+  long: number;
+  lat: number;
+  time: Date;
   year: number;
   month: number;
   day: number;
