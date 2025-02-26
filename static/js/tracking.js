@@ -31,16 +31,17 @@ async function fetchAndDisplayData(start, end, timezone) {
     try {
         const points = await getAndValidatePoints(start, end, timezone);
         if (points.length === 0) return;
-
+        console.log("points to move",points)
         points.forEach((point, index) => {
             setTimeout(() => {
                 const nextPoint = points[index + 1];
-                if (!nextPoint) return;
+                if (nextPoint){
+                    drawPolyline(point, nextPoint);
+                } 
 
-                drawPolyline(point, nextPoint);
-                updateMapView(nextPoint);
-                updateUI(nextPoint);
-                phoneMarker.setLatLng([nextPoint.lat, nextPoint.long]);
+                updateMapView(point);
+                updateUI(point);
+                phoneMarker.setLatLng([point.lat, point.long]);
                 updateLoader(index * speed);
             }, index * speed);
         });
