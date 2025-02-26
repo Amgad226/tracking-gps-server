@@ -107,7 +107,7 @@ function drawPolyline(point1, point2, color) {
         [point1.lat, point1.long],
         [point2.lat, point2.long]
     ], {
-        color: color ? ? 'rgba(250, 124, 124, 0.7)',
+        color: color ?? 'rgba(250, 124, 124, 0.7)',
         smoothFactor: 1
     }).addTo(map);
 }
