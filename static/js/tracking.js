@@ -64,7 +64,7 @@ async function getAndValidatePoints(start, end, timezone) {
 
         const validatedPoints = [];
         let currentDate = data.ddata[0].time;
-
+        let ignoreClosedPointCheck = true;
         for (let index = 0; index < data.ddata.length - 1; index++) {
             const point1 = L.latLng(data.ddata[index].lat, data.ddata[index].long);
             const point2 = L.latLng(data.ddata[index + 1].lat, data.ddata[index + 1].long);
@@ -72,7 +72,11 @@ async function getAndValidatePoints(start, end, timezone) {
 
             if (point1.distanceTo(point2) < thresholdDistance) {
                 console.log("Points are too close to each other, skipping...");
-                continue;
+                if (ignoreClosedPointCheck) {
+                    ignoreClosedPointCheck = false
+                } else {
+                    continue;
+                }
             }
 
             const currentTime = new Date(currentDate).getTime();
@@ -98,9 +102,12 @@ async function getAndValidatePoints(start, end, timezone) {
     }
 }
 
-function drawPolyline(point1, point2,color) {
-    L.polyline([ [point1.lat, point1.long], [point2.lat, point2.long] ], {
-        color: color??'rgba(250, 124, 124, 0.7)',
+function drawPolyline(point1, point2, color) {
+    L.polyline([
+        [point1.lat, point1.long],
+        [point2.lat, point2.long]
+    ], {
+        color: color ? ? 'rgba(250, 124, 124, 0.7)',
         smoothFactor: 1
     }).addTo(map);
 }
