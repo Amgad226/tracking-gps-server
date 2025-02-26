@@ -48,7 +48,7 @@ export const countEvents = async (): Promise<any> => {
 }
 export const data =  async (start:string,end:string,timezone:string):Promise<ReturnedEvnet[]>=>{
     const repo = new LocationRepo();
-
+    
     return await repo.data(start,end,timezone)
 }
 

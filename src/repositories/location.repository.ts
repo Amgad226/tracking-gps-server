@@ -28,7 +28,7 @@ export class LocationRepo {
     async data(start:string,end:string,timezone:string): Promise<ReturnedEvnet[]> {
         const startUtc = moment.tz(start,timezone).utc().toDate()
         const endUtc = moment.tz(end,timezone).utc().toDate()
-        console.log(timezone,startUtc,endUtc);
+        console.log("in repo :",timezone,startUtc,endUtc);
 
 
         return await PrismaService.instance.event.findMany({
