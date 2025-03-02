@@ -22,11 +22,13 @@ baseMaps["Google Maps"].addTo(map);
 L.control.layers(baseMaps).addTo(map);
 // Create home icon
 const homeIcon = createIcon('../images/home.png',20);
+const myLocationIcon = createIcon('../images/my-location.png',30);
 
 // Add a marker for the home location
 const homeMarker= L.marker([33.47484058 , 36.32718401 ], { icon: homeIcon,}).addTo(map);
 
 // Create phone icon
+const myLocationMarker = L.marker([0,0], {icon:myLocationIcon  }).bindPopup('Your are here :)').addTo(map);
 const phoneMarker = L.marker([0,0], { forceZIndex: 1  }).addTo(map);
 const myhomeMarker = L.marker([33.467648, 36.332887],{icon:homeIcon}).addTo(map)
 
