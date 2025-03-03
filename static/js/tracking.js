@@ -6,26 +6,37 @@ const timezone = urlParams.get('timezone');
 const speed = 1000 / speedQ;
 console.log(urlParams);
 console.log(start, end);
+let validation = true  ; 
 
 if (!start) {
+    validation=false;
     alert(`start is required`)
 }
 
 if (!end) {
+    validation=false;
     alert(`end is required`)
 }
 
 if (!timezone) {
+    validation=false;
     alert(`timezone is required`)
 }
 
 if (timezone == "undefined") {
+    validation=false;
     alert(`timezone is required`)
 }
 
-
-fetchAndDisplayData(start, end, timezone);
-
+if(validation){
+    fetchAndDisplayData(start, end, timezone);   
+}
+else{
+    loaderElement.style.display = "none";
+    setTimeout(()=>{
+        location.href="/"
+    },1000)
+}
 
 async function fetchAndDisplayData(start, end, timezone) {
     try {
