@@ -2,10 +2,18 @@
 const socket = io(api);
 let setMapViewOneTime=false ;
 socket.emit("subscribeToUser", "samsuang");
+let foundMyLocation =false;
 
 
-
+console.log(myLocationMarker)
 function requestLocation() {
+    if(foundMyLocation){
+        console.log("aleady requested")
+        const position = myLocationMarker.getLatLng();
+        updateMapView(position.lat,position.lng)
+        return;
+    }
+
     loaderElement.style.display = "block";
 
     map.locate({
@@ -16,7 +24,11 @@ function requestLocation() {
     .on('locationfound', function(e) {
         myLocationMarker.setLatLng([e.latitude, e.longitude]);
         loaderElement.style.display = "none";
+        if(!foundMyLocation){
+        updateMapView(e.latitude,e.longitude)
 
+        }
+        foundMyLocation=true;
         console.log("Location found!");
     })
     .on('locationerror', function(e) {
@@ -51,7 +63,7 @@ socket.on("locationUpdate", (data) => {
     console.log(data)
     updateLoader();
     if(!setMapViewOneTime){
-        updateMapView(data);
+        updateMapView(data.lat,data.long);
         setMapViewOneTime=true;
     }
     updateUI(data);

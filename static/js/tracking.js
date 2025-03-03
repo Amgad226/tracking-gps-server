@@ -39,7 +39,7 @@ async function fetchAndDisplayData(start, end, timezone) {
                     drawPolyline(point, nextPoint);
                 } 
 
-                updateMapView(point);
+                updateMapView(point.lat,point.long);
                 updateUI(point);
                 phoneMarker.setLatLng([point.lat, point.long]);
                 updateLoader(index * speed);

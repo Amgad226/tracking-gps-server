@@ -55,6 +55,6 @@ function createIcon(url,size=25) {
     });
 }
 
-function updateMapView(nextPoint) {
-    map.setView([parseFloat(nextPoint.lat).toFixed(3), parseFloat(nextPoint.long).toFixed(3)], 14);
+function updateMapView(lat,long) {
+    map.setView([parseFloat(lat).toFixed(3), parseFloat(long).toFixed(3)], 14);
 }
