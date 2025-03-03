@@ -2,6 +2,43 @@
 const socket = io(api);
 let setMapViewOneTime=false ;
 socket.emit("subscribeToUser", "samsuang");
+
+
+
+function requestLocation() {
+    map.locate({
+        // setView: true,
+        watch:true,
+        enableHighAccuracy: true
+    })
+    .on('locationfound', function(e) {
+        myLocationMarker.setLatLng([e.latitude, e.longitude]);
+        console.log("Location found!");
+    })
+    .on('locationerror', function(e) {
+        alert("Please enable location services and grant permission.");
+    });
+}
+
+// Custom button control
+L.Control.LocationButton = L.Control.extend({
+    onAdd: function(map) {
+        var btn = L.DomUtil.create('button', 'leaflet-bar leaflet-control leaflet-control-custom');
+        btn.innerHTML = "📍";
+        btn.style.backgroundColor = 'white';
+        btn.style.border = '2px solid rgb(191, 187, 187)';
+        btn.style.cursor = 'pointer';
+        btn.onclick = requestLocation; 
+        return btn;
+    },
+    onRemove: function(map) {}
+});
+
+// Add button to map
+L.control.locationButton = function(opts) {
+    return new L.Control.LocationButton(opts);
+};
+L.control.locationButton({ position: 'topright' }).addTo(map);
 map.locate({
     // setView: true
 })
