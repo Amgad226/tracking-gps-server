@@ -6,6 +6,8 @@ socket.emit("subscribeToUser", "samsuang");
 
 
 function requestLocation() {
+    loaderElement.style.display = "block";
+
     map.locate({
         // setView: true,
         watch:true,
@@ -13,9 +15,13 @@ function requestLocation() {
     })
     .on('locationfound', function(e) {
         myLocationMarker.setLatLng([e.latitude, e.longitude]);
+        loaderElement.style.display = "none";
+
         console.log("Location found!");
     })
     .on('locationerror', function(e) {
+        loaderElement.style.display = "none";
+
         alert("Please enable location services and grant permission.");
     });
 }
