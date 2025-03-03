@@ -75,3 +75,35 @@ function createIcon(url, size = 25) {
 function updateMapView(lat, long) {
     map.setView([parseFloat(lat).toFixed(3), parseFloat(long).toFixed(3)], 14);
 }
+
+// Create reusable location button control
+function createLocationButton(text, onClick,styles = {}) {
+    return L.Control.extend({
+        onAdd: function () {
+            const btn = L.DomUtil.create("button", "leaflet-bar leaflet-control leaflet-control-custom");
+            btn.innerHTML = text;
+            Object.assign(btn.style, {
+                backgroundColor: "white",
+                border: "2px solid rgb(191, 187, 187)",
+                padding: "5px",
+                cursor: "pointer",
+                ...styles
+            });
+            btn.addEventListener("mouseover", () => {
+                btn.style.backgroundColor = "rgb(239, 239, 239)";
+            });
+            btn.addEventListener("mouseout", () => {
+                btn.style.backgroundColor = "white";
+            });
+
+            btn.onclick = onClick;
+            return btn;
+        },
+        onRemove: function () {},
+    });
+}
+
+// Add custom buttons
+L.control.locationButton = function (opts, text, onClick,styles={}) {
+    return new (createLocationButton(text, onClick,styles))(opts);
+};

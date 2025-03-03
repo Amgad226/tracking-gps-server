@@ -1,70 +1,14 @@
-// Connect to socket
 const socket = io(api);
-let setMapViewOneTime=false ;
+let setMapViewOneTime = false;
 socket.emit("subscribeToUser", "samsuang");
-let foundMyLocation =false;
-
-
-console.log(myLocationMarker)
-function requestLocation() {
-    if(foundMyLocation){
-        console.log("aleady requested")
-        const position = myLocationMarker.getLatLng();
-        updateMapView(position.lat,position.lng)
-        return;
-    }
-
-    loaderElement.style.display = "block";
-
-    map.locate({
-        // setView: true,
-        watch:true,
-        enableHighAccuracy: true
-    })
-    .on('locationfound', function(e) {
-        myLocationMarker.setLatLng([e.latitude, e.longitude]);
-        loaderElement.style.display = "none";
-        if(!foundMyLocation){
-        updateMapView(e.latitude,e.longitude)
-
-        }
-        foundMyLocation=true;
-        console.log("Location found!");
-    })
-    .on('locationerror', function(e) {
-        loaderElement.style.display = "none";
-
-        alert("Please enable location services and grant permission.");
-    });
-}
-
-// Custom button control
-L.Control.LocationButton = L.Control.extend({
-    onAdd: function(map) {
-        var btn = L.DomUtil.create('button', 'leaflet-bar leaflet-control leaflet-control-custom');
-        btn.innerHTML = "📍";
-        btn.style.backgroundColor = 'white';
-        btn.style.border = '2px solid rgb(191, 187, 187)';
-        btn.style.cursor = 'pointer';
-        btn.onclick = requestLocation; 
-        return btn;
-    },
-    onRemove: function(map) {}
-});
-
-// Add button to map
-L.control.locationButton = function(opts) {
-    return new L.Control.LocationButton(opts);
-};
-L.control.locationButton({ position: 'topright' }).addTo(map);
 
 
 socket.on("locationUpdate", (data) => {
     console.log(data)
     updateLoader();
-    if(!setMapViewOneTime){
-        updateMapView(data.lat,data.long);
-        setMapViewOneTime=true;
+    if (!setMapViewOneTime) {
+        updateMapView(data.lat, data.long);
+        setMapViewOneTime = true;
     }
     updateUI(data);
 
@@ -75,70 +19,60 @@ socket.on("locationUpdate", (data) => {
 
 // Socket disconnected event
 socket.on("disconnect", () => {
-    showConnectionStatus("Socket disconnected. Attempting to reconnect...", "socket", "#FF0000");
+    showConnectionStatus("disconnected. Attempting to reconnect...", "socket", "red");
     attemptReconnect();
 });
 
 // Socket reconnecting event (Optional, depends on the library settings)
 socket.on("reconnecting", (attemptNumber) => {
-    showConnectionStatus(`Reconnecting... Attempt ${attemptNumber}`, "socket", "#00F800");
+    showConnectionStatus(`Reconnecting... Attempt ${attemptNumber}`, "socket", "red");
 });
 
 // Socket reconnected event
 socket.on("connect", () => {
-    showConnectionStatus("Socket reconnected successfully.", "socket", "green");
-    setTimeout(() => {
-        hideConnectionStatus("socket");
-
-    }, 1000)
+    showConnectionStatus("Socket connected.", "socket", "green");
 });
 
 // Socket reconnected event
 socket.on("reconnect", () => {
     reconnectAttempts = 0; // Reset the reconnect attempts
-    showConnectionStatus("Socket reconnected successfully.", "socket", "green");
-    setTimeout(() => {
-        hideConnectionStatus("socket");
+    showConnectionStatus("Socket reconnected.", "socket", "green");
 
-    }, 1000)
 });
-
-
 
 
 // Function to display connection status message
 function showConnectionStatus(message, type, backgroundColor) {
-
     let statusDiv = document.getElementById(`${type}-status`);
     if (!statusDiv) {
+
         statusDiv = document.createElement("div");
-        statusDiv.id = `${type}-status`;
-        statusDiv.style.position = "fixed";
-        statusDiv.style.top = "10px";
-        statusDiv.style.left = "50%";
-        statusDiv.style.transform = "translateX(-50%)";
-        statusDiv.style.padding = "10px";
-        statusDiv.style.backgroundColor = backgroundColor; // Red background
-        statusDiv.style.color = "#fff";
-        statusDiv.style.fontSize = "16px";
-        statusDiv.style.fontWeight = "bold";
-        statusDiv.style.borderRadius = "5px";
+        statusDiv.id = `${type}-status`
+        Object.assign(statusDiv.style, {
+            position: "fixed",
+            top: "10px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "10px",
+            color: "#fff",
+            fontSize: "16px",
+            fontWeight: "bold",
+            borderRadius: "5px",
+            "z-index": 9999,
+        });
         document.body.appendChild(statusDiv);
     }
-    statusDiv.style.backgroundColor = backgroundColor; // Red background
 
+    statusDiv.style.backgroundColor = backgroundColor;
     statusDiv.innerText = message;
     statusDiv.style.display = "block";
+    setTimeout(() => {
+        hideConnectionStatus(type);
+
+    }, 1500)
 }
 
 // Function to hide connection status message
-function hideConnectionStatus(type) {
-    const statusDiv = document.getElementById(`${type}-status`);
-    if (statusDiv) {
-        statusDiv.style.display = "none";
-    }
-}
-
 
 function hideConnectionStatus(type) {
     const statusDiv = document.getElementById(`${type}-status`);
@@ -154,6 +88,53 @@ function attemptReconnect() {
             socket.connect(); // Manually attempt to reconnect
         }, 1000);
     } else {
-        showConnectionStatus("Max reconnection attempts reached. Please check your network.", "socket");
+        showConnectionStatus("Max reconnection attempts reached. Please check your network.", "socket","red");
     }
 }
+
+// SECTION  custom buttons in map 
+let foundMyLocation = false;
+
+function requestLocation() {
+    if (foundMyLocation) {
+        console.log("aleady requested")
+        const position = myLocationMarker.getLatLng();
+        updateMapView(position.lat, position.lng)
+        return;
+    }
+
+    loaderElement.style.display = "block";
+
+    map.locate({
+            // setView: true,
+            watch: true,
+            enableHighAccuracy: true
+        })
+        .on('locationfound', function (e) {
+            myLocationMarker.setLatLng([e.latitude, e.longitude]);
+            loaderElement.style.display = "none";
+            if (!foundMyLocation) {
+                updateMapView(e.latitude, e.longitude)
+
+            }
+            foundMyLocation = true;
+            console.log("Location found!");
+        })
+        .on('locationerror', function (e) {
+            loaderElement.style.display = "none";
+
+            alert("Please enable location services and grant permission.");
+        });
+}
+
+
+
+L.control.locationButton({
+    position: "topright"
+}, "My Location", requestLocation).addTo(map);
+L.control.locationButton({
+    position: "topright"
+}, "Phone Location", () => {
+    const position = phoneMarker.getLatLng();
+    updateMapView(position.lat, position.lng);
+}).addTo(map);
