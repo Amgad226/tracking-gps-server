@@ -39,17 +39,7 @@ L.control.locationButton = function(opts) {
     return new L.Control.LocationButton(opts);
 };
 L.control.locationButton({ position: 'topright' }).addTo(map);
-map.locate({
-    // setView: true
-})
-.on('locationfound', function(e){
-    myLocationMarker.setLatLng([e.latitude, e.longitude]);
-    
-})
-.on('locationerror', function (e) {
-    console.log(e);
-    alert("Location access has been denied.");
-});
+
 
 socket.on("locationUpdate", (data) => {
     console.log(data)
