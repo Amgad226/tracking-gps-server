@@ -1,6 +1,6 @@
 const loader = document.querySelector('.loader');
-const api = "https://tracking-gps-server.amjad.cloud";
-// const api = "http://localhost:3015";
+// const api = "https://tracking-gps-server.amjad.cloud";
+const api = "http://localhost:3000";
 
 let count = 0;
 

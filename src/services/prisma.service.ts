@@ -1,18 +1,10 @@
-import { PrismaClient } from "@prisma/client"
+import "dotenv/config";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaClient } from "@prisma/client";
 
-export class PrismaService {
-    static #instance: PrismaClient;
-    // prisma : PrismaClient = new
+const connectionString = `${process.env.DATABASE_URL}`;
 
-    private constructor() { }
+const adapter = new PrismaBetterSqlite3({ url: connectionString });
+const PrismaService = new PrismaClient({ adapter });
 
-    public static get instance(): PrismaClient {
-        if (!PrismaService.#instance) {
-            PrismaService.#instance = new PrismaClient();
-        }
-
-        return PrismaService.#instance;
-    }
-
-
-}
+export {  PrismaService };

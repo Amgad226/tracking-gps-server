@@ -7,21 +7,21 @@ export class LocationRepo {
     constructor() {
     }
     async findLatestByName(name: string): Promise<ReturnedEvnet | null> {
-        return await PrismaService.instance.event.findFirst({
+        return await PrismaService.event.findFirst({
             orderBy: { createdAt: 'desc' }, where: { user: "samsung" },
             select: { lat: true, long: true, speed: true, battary: true, time: true, user: true }
 
         })
     }
     async latest(): Promise<ReturnedEvnet | null> {
-        return await PrismaService.instance.event.findFirst({
+        return await PrismaService.event.findFirst({
             orderBy: { createdAt: 'desc' },
             select: { id:true,lat: true, long: true, speed: true, battary: true, time: true, user: true }
 
         })
     }
     async count(): Promise<any> {
-        return await PrismaService.instance.event.count({
+        return await PrismaService.event.count({
 
         })
     }
@@ -31,7 +31,7 @@ export class LocationRepo {
         console.log("in repo :",timezone,startUtc,endUtc);
 
 
-        return await PrismaService.instance.event.findMany({
+        return await PrismaService.event.findMany({
             where: { 
                 createdAt: {
                     gte: startUtc, 
@@ -51,7 +51,7 @@ export class LocationRepo {
 
         let hour = date.getHours();
 
-        return await PrismaService.instance.event.create({
+        return await PrismaService.event.create({
             data: {
                 battary: data.GPSLogger ? parseFloat(data.battary) : (Math.round(parseFloat(data.battary) * 100)),
                 lat: parseFloat(data.latitude),
