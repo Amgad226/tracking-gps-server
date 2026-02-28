@@ -23,6 +23,16 @@ app.use(cors({ origin: "*" }))
 
 app.use("/static", express.static(path.join(__dirname,'..', 'static')));
 
+// frontend env vars endpoint
+app.get("/config.js", (req, res) => {
+  res.type("application/javascript");
+  res.send(`
+    window.APP_CONFIG = {
+      API_URL: "${process.env.API_URL}",
+      WEBSITE_URL: "${process.env.WEBSITE_URL}"
+    };
+  `);
+});
 
 app.use(router.use());
 

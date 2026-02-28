@@ -1,0 +1,165 @@
+   body {
+            font-family: 'Arial', sans-serif;
+            direction: rtl;
+            /* Right-to-left for Arabic */
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            flex-direction: column;
+        }
+
+        a.link {
+            font-size: 18px;
+            margin: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .link:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Styles for the date picker pop-up */
+        .date-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .date-popup input {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .date-popup button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .date-popup button:hover {
+            background-color: #0056b3;
+        }
+
+
+          /* Style the select dropdown */
+        #speed {
+            appearance: none;
+            /* Remove default styling on some browsers */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 00px 00px;
+            /* Add padding to make it look more spacious */
+            font-size: 16px;
+            /* Font size for the dropdown text */
+            border: 2px solid #ccc;
+            /* Light border */
+            border-radius: 5px;
+            /* Rounded corners */
+            background-color: #fff;
+            /* White background */
+            color: #333;
+            /* Dark text color */
+            cursor: pointer;
+            /* Pointer cursor to indicate it's clickable */
+            transition: all 0.3s ease;
+            /* Smooth transition for focus and hover effects */
+            width: 120px;
+            /* Adjust width if needed */
+            margin: 10px 0;
+            /* Add some spacing around the dropdown */
+        }
+
+        /* Add a custom arrow icon for the select element */
+        #speed::-ms-expand {
+            display: none;
+            /* Remove default dropdown arrow in IE */
+        }
+
+        /* Style the dropdown on hover */
+        #speed:hover {
+            border-color: #007bff;
+            /* Change border color on hover */
+        }
+
+        /* Style the dropdown on focus */
+        #speed:focus {
+            border-color: #007bff;
+            /* Change border color on focus */
+            outline: none;
+            /* Remove the default outline */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            /* Add a soft blue glow */
+        }
+
+        /* Style the options inside the dropdown */
+        #speed option {
+            padding: 10px;
+            /* Add padding to the options */
+            font-size: 16px;
+            /* Set the font size of the options */
+            background-color: #fff;
+            /* Set background to white */
+            color: #333;
+            /* Set text color to dark */
+        }
+
+        /* Highlight selected option */
+        #speed option:checked {
+            background-color: #007bff;
+            /* Set background color of selected option */
+            color: #fff;
+            /* Set text color of selected option */
+        }

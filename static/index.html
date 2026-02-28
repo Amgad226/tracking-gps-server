@@ -1,295 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>تتبع الموقع</title>
 
     <!-- Include Picker.js CSS -->
-    <link rel="stylesheet" href="static/css/picker.css">
+    <link rel="stylesheet" href="static/css/picker.css" />
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pickerjs/dist/picker.min.css"> -->
 
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            direction: rtl;
-            /* Right-to-left for Arabic */
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="static/css/index.css" />
+  </head>
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-            flex-direction: column;
-        }
-
-        a.link {
-            font-size: 18px;
-            margin: 10px;
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .link:hover {
-            background-color: #0056b3;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
-        /* Styles for the date picker pop-up */
-        .date-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .date-popup input {
-            margin: 10px 0;
-            padding: 8px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .date-popup button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .date-popup button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-    <style>
-        /* Style the select dropdown */
-        #speed {
-            appearance: none;
-            /* Remove default styling on some browsers */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            padding: 00px 00px;
-            /* Add padding to make it look more spacious */
-            font-size: 16px;
-            /* Font size for the dropdown text */
-            border: 2px solid #ccc;
-            /* Light border */
-            border-radius: 5px;
-            /* Rounded corners */
-            background-color: #fff;
-            /* White background */
-            color: #333;
-            /* Dark text color */
-            cursor: pointer;
-            /* Pointer cursor to indicate it's clickable */
-            transition: all 0.3s ease;
-            /* Smooth transition for focus and hover effects */
-            width: 120px;
-            /* Adjust width if needed */
-            margin: 10px 0;
-            /* Add some spacing around the dropdown */
-        }
-
-        /* Add a custom arrow icon for the select element */
-        #speed::-ms-expand {
-            display: none;
-            /* Remove default dropdown arrow in IE */
-        }
-
-        /* Style the dropdown on hover */
-        #speed:hover {
-            border-color: #007bff;
-            /* Change border color on hover */
-        }
-
-        /* Style the dropdown on focus */
-        #speed:focus {
-            border-color: #007bff;
-            /* Change border color on focus */
-            outline: none;
-            /* Remove the default outline */
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            /* Add a soft blue glow */
-        }
-
-        /* Style the options inside the dropdown */
-        #speed option {
-            padding: 10px;
-            /* Add padding to the options */
-            font-size: 16px;
-            /* Set the font size of the options */
-            background-color: #fff;
-            /* Set background to white */
-            color: #333;
-            /* Set text color to dark */
-        }
-
-        /* Highlight selected option */
-        #speed option:checked {
-            background-color: #007bff;
-            /* Set background color of selected option */
-            color: #fff;
-            /* Set text color of selected option */
-        }
-    </style>
-
-</head>
-
-<body>
-
+  <body>
     <header>
-        <h1>تتبع الموقع</h1>
+      <h1>تتبع الموقع</h1>
     </header>
 
     <div class="container">
-        <a class="link" href="static/pages/live.html">الموقع الحي</a>
-        <a class="link" href="#" id="openDatePopup">التقرير على الخريطة</a>
+      <a class="link" href="static/pages/live.html">الموقع الحي</a>
+      <a class="link" href="#" id="openDatePopup">التقرير على الخريطة</a>
     </div>
 
     <div class="overlay" id="overlay"></div>
     <div class="date-popup" id="datePopup">
-        <h3>اختر التاريخ والوقت</h3>
-        <label for="startDate">تاريخ ووقت البداية:</label>
-        <input type="text" id="startDate" value="2025-02-21 09:00">
-        <label for="endDate">تاريخ ووقت النهاية:</label>
-        <input type="text" id="endDate" value="2025-02-21 13:00">
+      <h3>اختر التاريخ والوقت</h3>
+      <label for="startDate">تاريخ ووقت البداية:</label>
+      <input type="text" id="startDate" value="2025-02-21 09:00" />
+      <label for="endDate">تاريخ ووقت النهاية:</label>
+      <input type="text" id="endDate" value="2025-02-21 13:00" />
 
-        <label for="timezone">المنطقة الزمنية</label>
-        <br>
-        <select id="timezone" name="timezone">
-            <option selected value="Asia/Damascus">Damascus</option>
-            <option value="Asia/Dubai">Dubai</option>
-        </select>
-        <br>
+      <label for="timezone">المنطقة الزمنية</label>
+      <br />
+      <select id="timezone" name="timezone">
+        <option selected value="Asia/Damascus">Damascus</option>
+        <option value="Asia/Dubai">Dubai</option>
+      </select>
+      <br />
 
-        <label for="startDate">سرعة العرض</label>
-        <br>
+      <label for="startDate">سرعة العرض</label>
+      <br />
 
-        <select id="speed" name="speed">
-            <option value="2">2X</option>
-            <option value="4">4X</option>
-            <option value="8" selected>8X</option>
-            <option value="16">16X</option>
-            <option value="32">32X</option>
-            <option value="64">64X</option>
-            <option value="100">100X</option>
-        </select>
-        <br>
-        <button id="submitDates">عرض التقرير</button>
+      <select id="speed" name="speed">
+        <option value="2">2X</option>
+        <option value="4">4X</option>
+        <option value="8" selected>8X</option>
+        <option value="16">16X</option>
+        <option value="32">32X</option>
+        <option value="64">64X</option>
+        <option value="100">100X</option>
+      </select>
+      <br />
+      <button id="submitDates">عرض التقرير</button>
     </div>
 
     <footer>
-        <a class="link" href="https://amjad.cloud">https://amjad.cloud</a>
+      <a class="link" id="websiteLink"></a>
     </footer>
 
-    <!-- Include Picker.js JS -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/pickerjs/dist/picker.min.js"></script> -->
+    <script src="/config.js"></script>
+
+    <script>
+      const websiteLink = document.getElementById("websiteLink");
+
+      websiteLink.href = window.APP_CONFIG.WEBSITE_URL;
+      websiteLink.textContent = window.APP_CONFIG.WEBSITE_URL;
+    </script>
     <script src="static/js/picker.js"></script>
     <script>
-        // Initialize Picker.js on the date input fields
-        const startDatePicker = new Picker(document.getElementById('startDate'), {
-            format: 'YYYY-MM-DD HH:mm',
-            headers: true, // Show a header with "Month" and "Year"
-            controls: true, // Show the time picker controls
-        });
+      // Initialize Picker.js on the date input fields
+      const startDatePicker = new Picker(document.getElementById("startDate"), {
+        format: "YYYY-MM-DD HH:mm",
+        headers: true, // Show a header with "Month" and "Year"
+        controls: true, // Show the time picker controls
+      });
 
-        const endDatePicker = new Picker(document.getElementById('endDate'), {
-            format: 'YYYY-MM-DD HH:mm',
-            headers: true,
-            controls: true,
-        });
+      const endDatePicker = new Picker(document.getElementById("endDate"), {
+        format: "YYYY-MM-DD HH:mm",
+        headers: true,
+        controls: true,
+      });
 
-        // Get elements
-        const openDatePopup = document.getElementById('openDatePopup');
-        const datePopup = document.getElementById('datePopup');
-        const overlay = document.getElementById('overlay');
-        const submitDates = document.getElementById('submitDates');
-        const startDateInput = document.getElementById('startDate');
-        const endDateInput = document.getElementById('endDate');
-        const speedInput = document.getElementById('speed');
-        const timezoneInput = document.getElementById('timezone');
+      // Get elements
+      const openDatePopup = document.getElementById("openDatePopup");
+      const datePopup = document.getElementById("datePopup");
+      const overlay = document.getElementById("overlay");
+      const submitDates = document.getElementById("submitDates");
+      const startDateInput = document.getElementById("startDate");
+      const endDateInput = document.getElementById("endDate");
+      const speedInput = document.getElementById("speed");
+      const timezoneInput = document.getElementById("timezone");
 
-        // Open the date popup when the "التقرير على الخريطة" link is clicked
-        openDatePopup.addEventListener('click', function (e) {
-            e.preventDefault();
-            datePopup.style.display = 'block';
-            overlay.style.display = 'block';
-        });
+      // Open the date popup when the "التقرير على الخريطة" link is clicked
+      openDatePopup.addEventListener("click", function (e) {
+        e.preventDefault();
+        datePopup.style.display = "block";
+        overlay.style.display = "block";
+      });
 
-        // Close the date popup when the overlay is clicked
-        overlay.addEventListener('click', function () {
-            datePopup.style.display = 'none';
-            overlay.style.display = 'none';
-        });
+      // Close the date popup when the overlay is clicked
+      overlay.addEventListener("click", function () {
+        datePopup.style.display = "none";
+        overlay.style.display = "none";
+      });
 
-        // Handle the submission of the selected dates
-        submitDates.addEventListener('click', function (e) {
-            e.preventDefault();
-            const startDate = startDateInput.value;
-            const endDate = endDateInput.value;
-            const s = speedInput.value
-            const timezone = timezoneInput.value;
-            console.log(startDate)
-            console.log(endDate)
-       
-            if (startDate && endDate) {
-                // Construct the query parameters
-                const queryParams =
-                    `?start=${encodeURIComponent(startDate)}&end=${encodeURIComponent(endDate)}&timezone=${encodeURIComponent(timezone)}&speed=${encodeURIComponent(s)}`;
+      // Handle the submission of the selected dates
+      submitDates.addEventListener("click", function (e) {
+        e.preventDefault();
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+        const s = speedInput.value;
+        const timezone = timezoneInput.value;
+        console.log(startDate);
+        console.log(endDate);
 
-                // Redirect to the report page with the query params
-                window.location.href = `static/pages/points.html${queryParams}`;
-            } else {
-                alert('يرجى تحديد تاريخ ووقت البداية والنهاية');
-            }
-        });
+        if (startDate && endDate) {
+          // Construct the query parameters
+          const queryParams = `?start=${encodeURIComponent(startDate)}&end=${encodeURIComponent(endDate)}&timezone=${encodeURIComponent(timezone)}&speed=${encodeURIComponent(s)}`;
+
+          // Redirect to the report page with the query params
+          window.location.href = `static/pages/points.html${queryParams}`;
+        } else {
+          alert("يرجى تحديد تاريخ ووقت البداية والنهاية");
+        }
+      });
     </script>
-
-</body>
-
+  </body>
 </html>
