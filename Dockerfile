@@ -29,7 +29,7 @@ COPY --from=builder /app/node_modules ./node_modules
 
 # Copy built files
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/static ./static
+COPY --from=builder /app/static ./dist/static
 
 # Expose port (your server runs on 3000)
 EXPOSE 3000
