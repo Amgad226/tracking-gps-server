@@ -13,6 +13,9 @@ RUN npm install
 # Copy all source files
 COPY . .
 
+ENV DATABASE_URL="file:./dev.db"
+RUN npx prisma generate
+
 # Build TypeScript
 RUN npm run build
 
