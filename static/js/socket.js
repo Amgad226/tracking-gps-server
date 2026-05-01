@@ -1,3 +1,5 @@
+console.log("socket.js loaded");
+console.log(window.APP_CONFIG.API_URL)
 const socket = io(api);
 let setMapViewOneTime = false;
 socket.emit("subscribeToUser", "samsuang");
