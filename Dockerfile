@@ -13,7 +13,7 @@ RUN npm install
 # Copy all source files
 COPY . .
 
-ENV DATABASE_URL="file:./dev.db"
+ENV DATABASE_URL="file:./dummy_just_for_generate_.db"
 RUN npx prisma generate
 
 # Build TypeScript
@@ -29,6 +29,7 @@ COPY --from=builder /app/node_modules ./node_modules
 
 # Copy built files
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/static ./dist/static
 
 # Expose port (your server runs on 3000)
