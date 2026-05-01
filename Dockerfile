@@ -31,9 +31,11 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/static ./dist/static
+COPY --from=builder /app/package.json ./package.json
 
 # Expose port (your server runs on 3000)
 EXPOSE 3000
 
 # Start the app
-CMD ["node", "dist/src/app.js"]
+CMD ["npm", "start"]
+# CMD ["node", "dist/src/app.js"]
