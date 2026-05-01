@@ -1,5 +1,5 @@
 const loader = document.querySelector('.loader');
-const api = window.API_URL
+const api = window.APP_CONFIG.API_URL
 let count = 0;
 
 const eventsElement =document.getElementById("events") ;
