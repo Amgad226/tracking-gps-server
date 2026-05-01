@@ -1,6 +1,16 @@
 console.log("socket.js loaded");
-console.log(window.APP_CONFIG.API_URL)
-const socket = io(api);
+const apiUrl = window.APP_CONFIG.API_URL;
+
+const url = apiUrl ? new URL(apiUrl) : null;
+
+console.log("apiUrl:",apiUrl)
+console.log("origin:", url.origin)
+console.log("pathname:", url.pathname)
+const socket = io(url ? url.origin : undefined, {
+  path: url
+    ? (url.pathname.replace(/\/$/, "") || "") + "/socket.io"
+    : "/socket.io"
+});
 let setMapViewOneTime = false;
 socket.emit("subscribeToUser", "samsuang");
 
